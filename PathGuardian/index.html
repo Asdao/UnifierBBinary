@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PathGuardian</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { "primary": "#2563eb", "primary-dark": "#1e40af", "accent": "#10b981" },
+                    fontFamily: { "display": ["Lexend", "sans-serif"] },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 40%, #3b82f6 70%, #93c5fd 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-hover:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen hero-gradient flex flex-col">
+    <!-- Top section -->
+    <div class="flex-1 flex flex-col items-center justify-center px-6 pt-12 pb-6 text-center">
+        <!-- Logo -->
+        <div class="mb-6">
+            <div
+                class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center border border-white/30 shadow-2xl">
+                <span class="material-icons text-white text-4xl">accessible</span>
+            </div>
+        </div>
+
+        <!-- Branding -->
+        <h1 class="text-5xl font-extrabold text-white tracking-tight mb-3">PathGuardian</h1>
+        <p class="text-xl text-blue-100 font-medium max-w-xs leading-relaxed">
+            Independent Mobility,<br>Shared Peace of Mind
+        </p>
+
+        <!-- Wheelchair Hero Image -->
+        <div class="mt-6 w-full max-w-sm">
+            <img src="wheelchair_hero.png"
+                alt="Accessibility illustration showing wheelchair user, guide dog, AR glasses, and sign language"
+                class="w-full rounded-3xl shadow-2xl border-4 border-white/20">
+        </div>
+
+        <!-- Trust indicators -->
+        <div class="flex items-center gap-3 mt-6">
+            <div class="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full">
+                <span class="material-icons text-emerald-300 text-sm">verified</span>
+                <span class="text-white/90 text-xs font-semibold">Secure</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full">
+                <span class="material-icons text-emerald-300 text-sm">mic</span>
+                <span class="text-white/90 text-xs font-semibold">Voice-First</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full">
+                <span class="material-icons text-emerald-300 text-sm">location_on</span>
+                <span class="text-white/90 text-xs font-semibold">GPS</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role Selection Cards -->
+    <div class="bg-white rounded-t-[2.5rem] px-6 pt-10 pb-12 shadow-2xl">
+        <h2 class="text-2xl font-bold text-slate-800 text-center mb-8">Who are you?</h2>
+        <div class="space-y-5 max-w-md mx-auto">
+            <!-- Senior / Navigator -->
+            <a href="senior_home.html"
+                class="card-hover block bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-2xl border-2 border-blue-200 no-underline">
+                <div class="flex items-center gap-5">
+                    <div
+                        class="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/30">
+                        <span class="material-icons text-white text-3xl">directions_walk</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-slate-800">I am navigating</h3>
+                        <p class="text-sm text-slate-500 mt-1">Simple voice tools to get you there safely</p>
+                    </div>
+                    <span class="material-icons text-blue-300 text-3xl">chevron_right</span>
+                </div>
+            </a>
+            <!-- Caregiver -->
+            <a href="caregiver_welcome.html"
+                class="card-hover block bg-gradient-to-r from-emerald-50 to-emerald-100 p-6 rounded-2xl border-2 border-emerald-200 no-underline">
+                <div class="flex items-center gap-5">
+                    <div
+                        class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/30">
+                        <span class="material-icons text-white text-3xl">visibility</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-slate-800">I am a Caregiver</h3>
+                        <p class="text-sm text-slate-500 mt-1">Monitor location and get real-time alerts</p>
+                    </div>
+                    <span class="material-icons text-emerald-300 text-3xl">chevron_right</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

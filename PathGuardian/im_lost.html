@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PathGuardian - Guidance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .pulse-soft {
+            box-shadow: 0 0 0 0 rgba(19, 127, 236, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(19, 127, 236, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(19, 127, 236, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(19, 127, 236, 0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased font-display">
+<!-- LARGE Back Button -->
+<a href="senior_home.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<!-- Main Mobile Container -->
+<div class="max-w-md mx-auto min-h-screen bg-sky-50 dark:bg-slate-950 flex flex-col relative overflow-hidden">
+<!-- Header / Status Bar Area -->
+<div class="pt-12 pb-6 px-6 text-center">
+<div class="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-6 relative">
+<div class="absolute inset-0 bg-primary/20 rounded-full animate-ping opacity-25"></div>
+<span class="material-icons text-primary text-5xl">person_pin_circle</span>
+</div>
+<h1 class="text-4xl font-bold text-slate-900 dark:text-white mb-3">Stay Put</h1>
+<p class="text-xl text-slate-600 dark:text-slate-300 px-4">
+                Help is on the way. Please stay where you are.
+            </p>
+</div>
+<!-- Main Content Scroll Area -->
+<div class="flex-1 px-6 space-y-6 pb-32">
+<!-- Reassurance Card -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-primary/10">
+<div class="flex items-start gap-4">
+<div class="bg-green-100 dark:bg-green-900/30 p-2 rounded-full">
+<span class="material-icons text-green-600 dark:text-green-400">check_circle</span>
+</div>
+<div>
+<h2 class="text-lg font-semibold mb-1">You are safe</h2>
+<p class="text-slate-500 dark:text-slate-400">Sarah has been notified and can see your exact location.</p>
+</div>
+</div>
+</div>
+<!-- Emergency Actions -->
+<div class="space-y-4 pt-4">
+<!-- Primary Call Button -->
+<button class="w-full bg-primary hover:bg-primary/90 text-white py-6 rounded-full flex items-center justify-center gap-4 shadow-lg shadow-primary/25 transition-transform active:scale-95">
+<span class="material-icons text-3xl">call</span>
+<span class="text-2xl font-bold">Call Sarah</span>
+</button>
+<!-- Secondary Share Button -->
+<button class="w-full bg-white dark:bg-slate-800 border-2 border-primary/20 text-primary py-5 rounded-full flex items-center justify-center gap-3 transition-transform active:scale-95">
+<span class="material-icons">share_location</span>
+<span class="text-xl font-semibold">Share Location Now</span>
+</button>
+</div>
+<!-- Location Intelligence Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="relative h-32 w-full bg-slate-200 overflow-hidden">
+<img class="w-full h-full object-cover opacity-80" data-alt="A clean map showing a blue location pin" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ19pVrmuRs7iMXZnR1MudHzlZv8SvOUE3cTX1EfCUI21eAxnAbNrj39tut7QWoSlvOte9bwBhRbMc0tGpuDZHO7BfBu0b9V9GlTsjavOrzMaGBjKg9Ln2m469IJ91-yyWBcSAq6QUdE6yoohFEZtsVYuhEBk5h0CfWKe6KzxMskSBFlauua5wh4_jDJa8LQOvsNtRtBk-KkrEBFL7z5FNIJVzUhHsJwqHXXEvizbbeGMJrekk2zc3sQOwG8b7r-XnDsQU4DE0DmWE"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-8 h-8 bg-primary rounded-full border-4 border-white shadow-lg pulse-soft"></div>
+</div>
+</div>
+<div class="p-5">
+<p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Current Location</p>
+<p class="text-xl font-bold text-slate-800 dark:text-white">123 Maple Street</p>
+<p class="text-slate-500 dark:text-slate-400">Near Central Park Entrance</p>
+</div>
+</div>
+</div>
+<!-- IOS Style Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 safe-area-bottom">
+<div class="flex justify-around items-center h-20 px-4">
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons">home</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons">map</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter">Map</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<div class="relative">
+<span class="material-icons">security</span>
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Safety</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons">person</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter">Profile</span>
+</button>
+</div>
+</nav>
+<!-- Decorative elements to soften the UI -->
+<div class="absolute top-[-10%] left-[-20%] w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+<div class="absolute bottom-[20%] right-[-10%] w-48 h-48 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+</div>
+</body></html>

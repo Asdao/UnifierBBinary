@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PathGuardian - Walking Navigation</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#135bec", "background-light": "#f6f6f8", "danger": "#ef4444" },
+                    fontFamily: { "display": ["Lexend"] },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: 100dvh;
+            font-family: 'Lexend', sans-serif;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .pulse-dot {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(19, 91, 236, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(19, 91, 236, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(19, 91, 236, 0);
+            }
+        }
+
+        /* Alert modal backdrop */
+        .alert-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light font-display text-slate-900 h-screen flex flex-col overflow-hidden">
+    <!-- LARGE Back Button -->
+    <a href="senior_home.html"
+        style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s"
+        onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+    </a>
+
+    <!-- Full-screen Map -->
+    <div class="flex-1 relative">
+        <div id="map"></div>
+
+        <!-- Status Banner -->
+        <div class="absolute top-4 left-24 right-4 z-[1000]">
+            <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl px-5 py-4 flex items-center gap-3"
+                id="banner-inner">
+                <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse flex-shrink-0" id="status-dot"></div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-slate-800 truncate" id="status-title">Walking to National Museum
+                    </p>
+                    <p class="text-xs text-slate-500" id="status-subtitle">City Hall MRT → National Museum</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deviation Alert (hidden by default) -->
+        <div id="deviation-alert" class="absolute top-24 left-4 right-4 z-[1001] hidden">
+            <div class="bg-red-500 text-white rounded-2xl shadow-2xl px-5 py-4 flex items-center gap-3">
+                <span class="material-icons text-3xl animate-pulse">warning</span>
+                <div class="flex-1">
+                    <p class="text-sm font-bold">⚠️ Route Deviation Detected</p>
+                    <p class="text-xs opacity-90">You are moving away from the planned route</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recenter btn -->
+        <button onclick="recenterMap()"
+            class="absolute bottom-52 right-4 z-[1000] w-14 h-14 bg-white rounded-2xl shadow-xl flex items-center justify-center text-primary active:scale-90 transition-transform">
+            <span class="material-icons text-2xl">my_location</span>
+        </button>
+    </div>
+
+    <!-- Bottom Panel -->
+    <div class="bg-white border-t border-slate-200 px-6 pt-5 pb-8 z-50">
+        <!-- Turn instruction -->
+        <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg"
+                id="instr-icon-bg" style="background:#135bec; box-shadow: 0 4px 14px rgba(19,91,236,0.3)">
+                <span class="material-icons text-white text-3xl" id="instr-icon">straight</span>
+            </div>
+            <div>
+                <p class="text-2xl font-bold text-slate-900" id="instr-text">Head north on Stamford Rd</p>
+                <p class="text-lg text-slate-500" id="instr-detail">towards National Museum</p>
+            </div>
+        </div>
+
+        <!-- Distance / ETA / Status -->
+        <div class="flex gap-3 mb-4">
+            <div class="flex-1 bg-slate-50 rounded-xl py-3 px-4 text-center">
+                <span class="block text-xl font-bold text-primary" id="dist-left">650m</span>
+                <span class="text-xs text-slate-500">remaining</span>
+            </div>
+            <div class="flex-1 bg-slate-50 rounded-xl py-3 px-4 text-center">
+                <span class="block text-xl font-bold text-primary" id="eta-left">8 min</span>
+                <span class="text-xs text-slate-500">ETA</span>
+            </div>
+            <div class="flex-1 bg-slate-50 rounded-xl py-3 px-4 text-center">
+                <span class="block text-xl font-bold" id="direction-status" style="color:#10b981">On Track</span>
+                <span class="text-xs text-slate-500">status</span>
+            </div>
+        </div>
+
+        <!-- RED NEED HELP button -->
+        <button onclick="showAlertSent()"
+            class="w-full bg-red-500 hover:bg-red-600 text-white rounded-full py-6 flex items-center justify-center gap-4 shadow-lg shadow-red-500/30 transition-all active:scale-95">
+            <span class="material-icons text-4xl">emergency</span>
+            <span class="text-2xl font-bold">NEED HELP</span>
+        </button>
+    </div>
+
+    <!-- Alert Sent Modal (hidden) -->
+    <div id="alert-modal" class="fixed inset-0 z-[9999] hidden flex items-center justify-center alert-overlay">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mx-6 max-w-sm w-full text-center animate-bounce-in">
+            <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="material-icons text-red-500 text-5xl">notifications_active</span>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">🚨 Alert Sent!</h2>
+            <p class="text-lg text-slate-600 mb-1">Emergency alert sent to:</p>
+            <p class="text-2xl font-bold text-red-500 mb-4">Caretaker Sarah</p>
+            <p class="text-sm text-slate-500 mb-6">Your caretaker has been notified of your location and will respond
+                shortly.</p>
+            <div class="space-y-3">
+                <button onclick="window.location.href='im_lost.html'"
+                    class="w-full bg-red-500 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                    <span class="material-icons">phone</span>
+                    Call Caretaker Sarah
+                </button>
+                <button onclick="closeAlertModal()"
+                    class="w-full bg-slate-100 text-slate-600 py-4 rounded-2xl font-bold text-lg active:scale-95 transition-transform">
+                    I'm OK — Cancel Alert
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Alert modal
+        function showAlertSent() {
+            document.getElementById('alert-modal').classList.remove('hidden');
+        }
+        function closeAlertModal() {
+            document.getElementById('alert-modal').classList.add('hidden');
+        }
+
+        // Singapore Route: City Hall MRT → National Museum
+        var startPos = [1.29325, 103.85215];
+        var endPos = [1.29685, 103.84865];
+
+        var routeCoords = [
+            [1.29325, 103.85215],
+            [1.29360, 103.85180],
+            [1.29400, 103.85130],
+            [1.29440, 103.85070],
+            [1.29480, 103.85010],
+            [1.29520, 103.84970],
+            [1.29560, 103.84940],
+            [1.29590, 103.84920],
+            [1.29620, 103.84900],
+            [1.29650, 103.84880],
+            [1.29670, 103.84870],
+            [1.29685, 103.84865],
+        ];
+
+        // With deviation at steps 5-6
+        var deviatedCoords = [
+            [1.29325, 103.85215],
+            [1.29360, 103.85180],
+            [1.29400, 103.85130],
+            [1.29440, 103.85070],
+            [1.29480, 103.85010],
+            [1.29530, 103.85050],  // DEVIATED
+            [1.29560, 103.85090],  // DEVIATED
+            [1.29550, 103.85030],  // Correcting
+            [1.29560, 103.84970],
+            [1.29600, 103.84930],
+            [1.29650, 103.84880],
+            [1.29685, 103.84865],
+        ];
+
+        var instructions = [
+            { icon: "straight", text: "Head north on Stamford Rd", detail: "towards National Museum", dist: "650m", eta: "8 min" },
+            { icon: "straight", text: "Continue along St Andrew's Rd", detail: "past the civic district", dist: "580m", eta: "7 min" },
+            { icon: "straight", text: "Keep walking straight", detail: "War Memorial on your left", dist: "500m", eta: "6 min" },
+            { icon: "straight", text: "Continue on St Andrew's Rd", detail: "approaching junction", dist: "420m", eta: "5 min" },
+            { icon: "turn_left", text: "Bear left at junction", detail: "onto Stamford Road", dist: "340m", eta: "4 min" },
+            { icon: "warning", text: "⚠ You are off route!", detail: "turn back to Stamford Rd", dist: "---", eta: "---", deviated: true },
+            { icon: "warning", text: "⚠ Still off route!", detail: "recalculating...", dist: "---", eta: "---", deviated: true },
+            { icon: "u_turn_left", text: "Correcting course", detail: "heading back to Stamford Rd", dist: "380m", eta: "5 min" },
+            { icon: "straight", text: "Back on track!", detail: "continue on Stamford Rd", dist: "280m", eta: "3 min" },
+            { icon: "straight", text: "Walk past Fort Canning Park", detail: "museum entrance ahead", dist: "180m", eta: "2 min" },
+            { icon: "straight", text: "National Museum in sight!", detail: "on your right", dist: "80m", eta: "1 min" },
+            { icon: "flag", text: "🎉 You have arrived!", detail: "National Museum of Singapore", dist: "0m", eta: "Done!", arrived: true },
+        ];
+
+        // Map
+        var map = L.map('map', { center: [1.2950, 103.8505], zoom: 16, zoomControl: false, attributionControl: false });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+
+        // Route line
+        L.polyline(routeCoords, { color: '#135bec', weight: 6, opacity: 0.8, lineCap: 'round', lineJoin: 'round' }).addTo(map);
+        L.polyline(routeCoords, { color: 'white', weight: 2, opacity: 0.7, dashArray: '8 12', lineCap: 'round' }).addTo(map);
+
+        // Walked path
+        var walkedLine = L.polyline([], { color: '#10b981', weight: 5, opacity: 0.9, lineCap: 'round' }).addTo(map);
+
+        // Current location
+        var currentIcon = L.divIcon({
+            html: '<div style="width:22px;height:22px;background:#135bec;border:3px solid white;border-radius:50%;box-shadow:0 0 0 4px rgba(19,91,236,0.3)" class="pulse-dot"></div>',
+            iconSize: [22, 22], iconAnchor: [11, 11], className: ''
+        });
+        var currentMarker = L.marker(startPos, { icon: currentIcon, zIndexOffset: 1000 }).addTo(map);
+
+        // Destination
+        var destIcon = L.divIcon({
+            html: '<div style="position:relative"><div style="width:24px;height:24px;background:#ef4444;border:3px solid white;border-radius:50%;box-shadow:0 2px 12px rgba(239,68,68,0.5)"></div><div style="position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:#ef4444;color:white;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:bold;white-space:nowrap;font-family:Lexend,sans-serif">National Museum</div></div>',
+            iconSize: [24, 24], iconAnchor: [12, 12], className: ''
+        });
+        L.marker(endPos, { icon: destIcon }).addTo(map);
+
+        // Start label
+        var startIcon = L.divIcon({
+            html: '<div style="position:relative"><div style="width:16px;height:16px;background:#135bec;border:2px solid white;border-radius:50%;box-shadow:0 1px 6px rgba(19,91,236,0.4)"></div><div style="position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:#135bec;color:white;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:bold;white-space:nowrap;font-family:Lexend,sans-serif">City Hall MRT</div></div>',
+            iconSize: [16, 16], iconAnchor: [8, 8], className: ''
+        });
+        L.marker(startPos, { icon: startIcon }).addTo(map);
+
+        map.fitBounds(L.latLngBounds(routeCoords).pad(0.2));
+
+        // AUTO-PLAY movement simulation (no start button needed)
+        var currentStep = 0;
+
+        function simulateStep() {
+            if (currentStep >= deviatedCoords.length) return;
+
+            var pos = deviatedCoords[currentStep];
+            var instr = instructions[currentStep];
+
+            currentMarker.setLatLng(pos);
+            walkedLine.setLatLngs(deviatedCoords.slice(0, currentStep + 1));
+            map.panTo(pos, { animate: true, duration: 1 });
+
+            var isDeviated = instr.deviated || false;
+            var isArrived = instr.arrived || false;
+
+            if (isDeviated) {
+                document.getElementById('deviation-alert').classList.remove('hidden');
+                document.getElementById('status-dot').style.background = '#ef4444';
+                document.getElementById('direction-status').textContent = 'Off Route';
+                document.getElementById('direction-status').style.color = '#ef4444';
+                document.getElementById('instr-icon-bg').style.background = '#ef4444';
+            } else {
+                document.getElementById('deviation-alert').classList.add('hidden');
+                document.getElementById('status-dot').style.background = '#10b981';
+                document.getElementById('direction-status').textContent = isArrived ? '✓ Arrived' : 'On Track';
+                document.getElementById('direction-status').style.color = isArrived ? '#135bec' : '#10b981';
+                document.getElementById('instr-icon-bg').style.background = isArrived ? '#10b981' : '#135bec';
+            }
+
+            document.getElementById('instr-icon').textContent = instr.icon;
+            document.getElementById('instr-text').textContent = instr.text;
+            document.getElementById('instr-detail').textContent = instr.detail;
+            document.getElementById('dist-left').textContent = instr.dist;
+            document.getElementById('eta-left').textContent = instr.eta;
+            document.getElementById('status-subtitle').textContent = 'Step ' + (currentStep + 1) + ' of ' + deviatedCoords.length;
+
+            if (isArrived) {
+                document.getElementById('status-title').textContent = '🎉 Arrived at National Museum!';
+            }
+
+            currentStep++;
+            if (currentStep < deviatedCoords.length) {
+                setTimeout(simulateStep, 5000);
+            }
+        }
+
+        function recenterMap() {
+            map.setView(currentMarker.getLatLng(), 17, { animate: true });
+        }
+
+        // Auto-start after map loads
+        setTimeout(simulateStep, 2000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<html lang="en"><head>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<!-- LARGE Back Button -->
+<a href="dashboard_live.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>```html
+
+
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PathGuardian - Senior Privacy Controls</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+<!-- Mobile Container (iPhone Scale) -->
+<div class="max-w-md mx-auto min-h-screen bg-background-light dark:bg-background-dark flex flex-col relative overflow-hidden">
+<!-- Status Bar Space (iOS) -->
+<div class="h-12 w-full flex justify-between items-end px-8 pb-2">
+<span class="text-sm font-bold">9:41</span>
+<div class="flex gap-1">
+<span class="material-icons text-xs">signal_cellular_alt</span>
+<span class="material-icons text-xs">wifi</span>
+<span class="material-icons text-xs">battery_full</span>
+</div>
+</div>
+<!-- Header -->
+<header class="px-6 py-4 flex items-center justify-between">
+<button class="w-12 h-12 rounded-full flex items-center justify-center bg-white dark:bg-slate-800 ios-shadow">
+<span class="material-icons text-3xl">chevron_left</span>
+</button>
+<h1 class="text-2xl font-bold">Privacy Mode</h1>
+<div class="w-12"></div> <!-- Spacer -->
+</header>
+<!-- Main Content Scrollable Area -->
+<main class="flex-1 px-6 pt-2 pb-32 overflow-y-auto">
+<!-- Status Card -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl ios-shadow mb-8 border-l-8 border-primary">
+<div class="flex items-center gap-4">
+<div class="bg-primary/20 p-3 rounded-full">
+<span class="material-icons text-primary text-3xl">visibility</span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-lg">Current Status</p>
+<p class="text-xl font-bold">Sharing Location</p>
+</div>
+</div>
+</div>
+<!-- Main Toggle Section -->
+<section class="mb-10 text-center">
+<h2 class="text-2xl font-semibold mb-4">Pause Tracking</h2>
+<p class="text-slate-600 dark:text-slate-300 text-lg mb-8 leading-relaxed">
+                    Need some private time? Your family won't see your location while this is turned on.
+                </p>
+<!-- Giant Toggle Interaction Area -->
+<div class="flex justify-center mb-10">
+<button class="w-48 h-48 rounded-full bg-white dark:bg-slate-800 ios-shadow flex flex-col items-center justify-center border-4 border-slate-100 dark:border-slate-700 active:scale-95 transition-transform">
+<span class="material-icons text-6xl text-slate-300 mb-2">power_settings_new</span>
+<span class="text-xl font-bold text-slate-400 uppercase tracking-widest">Off</span>
+</button>
+</div>
+</section>
+<!-- Duration Selection -->
+<section>
+<h3 class="text-xl font-bold mb-4 text-center">How long for?</h3>
+<div class="grid grid-cols-1 gap-4">
+<!-- 30 Mins -->
+<button class="w-full py-6 px-6 bg-white dark:bg-slate-800 rounded-xl ios-shadow flex items-center justify-between group active:bg-primary active:text-white transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-icons text-3xl text-primary group-active:text-white">timer</span>
+<span class="text-xl font-medium">30 Minutes</span>
+</div>
+<span class="material-icons opacity-30">chevron_right</span>
+</button>
+<!-- 1 Hour -->
+<button class="w-full py-6 px-6 bg-white dark:bg-slate-800 rounded-xl ios-shadow flex items-center justify-between group active:bg-primary active:text-white transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-icons text-3xl text-primary group-active:text-white">schedule</span>
+<span class="text-xl font-medium">1 Hour</span>
+</div>
+<span class="material-icons opacity-30">chevron_right</span>
+</button>
+<!-- Indefinite -->
+<button class="w-full py-6 px-6 bg-white dark:bg-slate-800 rounded-xl ios-shadow border-2 border-dashed border-primary/40 flex items-center justify-between group active:bg-primary active:text-white transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-icons text-3xl text-primary group-active:text-white">back_hand</span>
+<span class="text-xl font-medium">Until I turn it back on</span>
+</div>
+<span class="material-icons opacity-30">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Safety Note -->
+<div class="mt-10 p-4 bg-primary/10 rounded-lg flex items-start gap-4">
+<span class="material-icons text-primary mt-1">info</span>
+<p class="text-md font-medium text-slate-700 dark:text-slate-300">
+                    Emergency alerts will still work even if privacy mode is active.
+                </p>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="absolute bottom-0 left-0 right-0 bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-6 pt-3 pb-8 flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="senior_home.html">
+<span class="material-icons text-3xl">home</span>
+<span class="text-xs font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="senior_home_map.html">
+<span class="material-icons text-3xl">map</span>
+<span class="text-xs font-medium">Map</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-icons text-3xl">shield</span>
+<span class="text-xs font-medium">Safety</span>
+<div class="w-1.5 h-1.5 bg-primary rounded-full"></div>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="profile.html">
+<span class="material-icons text-3xl">person</span>
+<span class="text-xs font-medium">Profile</span>
+</a>
+</nav>
+<!-- Floating Image Context Background (Abstract) -->
+<div class="absolute -z-10 top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="Abstract green and white fluid organic pattern background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClpem_bl1uOS3txkSI__PuuBGV0LXu5CKyuivwmJoO5xy58a04ZN9APtFVcAjDKYorcFYER_cpbB8BWsclKqZx5SOkIeevbsBSZE7_nLAkv720pMfNEMy0njWkCjZLO4hpveURGy7bZ95JMgqWFKCR7gKbXT6T3yrzR1QkPJkMLO66gWBQYFeB1jM1svtaBT5jBrEH6QPj1JZZBlFeVmD-bOm0kTnqhTf4rwhc2CWZJoLhrrKiTc9WqV4qc_101KzZzftCoU803iBG"/>
+</div>
+</div>
+</body></html><!-- 
+Design Choices Documentation:
+- Primary Color Application: Used #13ec5b for icons, borders, and active state highlights to maintain consistency with PathGuardian branding.
+- Accessibility: Large 3xl material icons and text (min 18pt/20pt equivalent) ensure visibility for seniors. 
+- High Contrast: Dark slate text on a near-white background (bg-background-light) meets WCAG standards for readability.
+- Interaction: The "Pause Tracking" toggle is designed as a large central button, easier to press than a small slide switch for users with limited motor dexterity.
+- Hierarchy: Information is presented vertically with ample white space to prevent visual clutter.
+-->

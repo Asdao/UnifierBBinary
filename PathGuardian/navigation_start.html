@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PathGuardian - Senior Navigation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#6338F1", // Vibrant purple from Life360 reference
+                        secondary: "#F3F0FF",
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#111827",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "24px",
+                        'xl': "32px",
+                    },
+                },
+            },
+        };
+    </script>
+<style>body {
+    font-family: "Inter", sans-serif;
+    -webkit-tap-highlight-color: transparent
+    }
+.ios-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)
+    }
+.map-bg { background: #e5e7eb; }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  <!-- Leaflet.js -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex justify-center items-center p-4">
+<!-- LARGE Back Button -->
+<a href="dashboard_live.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<div class="relative w-[390px] h-[844px] bg-white dark:bg-slate-900 rounded-[50px] border-[8px] border-slate-900 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col">
+<div class="px-8 pt-4 pb-2 flex justify-between items-center text-sm font-semibold">
+<span>9:41</span>
+<div class="flex items-center space-x-2">
+<span class="material-icons-round text-lg">signal_cellular_alt</span>
+<span class="material-icons-round text-lg">wifi</span>
+<span class="material-icons-round text-lg">battery_full</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col px-6 pt-4 space-y-6 overflow-y-auto pb-32">
+<div class="space-y-1">
+<h1 class="text-3xl font-extrabold tracking-tight">Where to?</h1>
+<p class="text-lg text-slate-500 dark:text-slate-400 font-medium">PathGuardian is ready to guide you.</p>
+</div>
+<div class="w-full h-44 rounded-3xl overflow-hidden relative ios-shadow">
+<div class="absolute inset-0 map-bg opacity-80 dark:opacity-60"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="relative">
+<div class="absolute inset-0 bg-primary/30 rounded-full animate-ping scale-150"></div>
+<div class="bg-primary w-6 h-6 rounded-full border-4 border-white shadow-lg flex items-center justify-center">
+<div class="w-2 h-2 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<button class="bg-primary hover:bg-opacity-90 text-white p-6 rounded-3xl flex items-center justify-between transition-all active:scale-95 shadow-lg">
+<div class="flex items-center space-x-4">
+<div class="bg-white/20 p-3 rounded-2xl">
+<span class="material-icons-round text-3xl">home</span>
+</div>
+<div class="text-left">
+<p class="text-2xl font-bold">Go Home</p>
+<p class="text-white/80 text-sm">124 Maple Street</p>
+</div>
+</div>
+<span class="material-icons-round text-3xl">chevron_right</span>
+</button>
+<button class="bg-slate-100 dark:bg-slate-800 p-6 rounded-3xl flex items-center space-x-4 border-2 border-transparent active:border-primary transition-all">
+<div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-2xl">
+<span class="material-icons-round text-3xl text-slate-600 dark:text-slate-300">search</span>
+</div>
+<span class="text-2xl font-semibold text-slate-500 dark:text-slate-400">Search destination</span>
+</button>
+</div>
+<div class="flex flex-col items-center py-4 space-y-4">
+<button class="w-24 h-24 rounded-full bg-rose-500 text-white flex items-center justify-center shadow-xl active:scale-90 transition-transform">
+<span class="material-icons-round text-5xl">mic</span>
+</button>
+<p class="font-bold text-lg text-slate-600 dark:text-slate-400 uppercase tracking-widest">Tap to Speak</p>
+</div>
+<div class="space-y-4">
+<h2 class="text-xl font-bold px-1">Recent Places</h2>
+<div class="space-y-3">
+<div class="bg-white dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 p-4 rounded-2xl flex items-center space-x-4">
+<span class="material-icons-round text-primary bg-primary/10 p-2 rounded-xl">local_pharmacy</span>
+<div class="flex-1">
+<p class="font-bold">City Pharmacy</p>
+<p class="text-sm text-slate-500">2 miles away</p>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 p-4 rounded-2xl flex items-center space-x-4">
+<span class="material-icons-round text-primary bg-primary/10 p-2 rounded-xl">park</span>
+<div class="flex-1">
+<p class="font-bold">Greenwood Park</p>
+<p class="text-sm text-slate-500">0.5 miles away</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 px-6 pt-4 pb-8 flex justify-between items-center">
+<button class="flex flex-col items-center space-y-1 text-slate-400 dark:text-slate-500">
+<span class="material-icons-round text-3xl">home</span>
+<span class="text-xs font-bold uppercase">Home</span>
+</button>
+<button class="flex flex-col items-center space-y-1 text-primary">
+<span class="material-icons-round text-3xl">near_me</span>
+<span class="text-xs font-bold uppercase">Map</span>
+</button>
+<button class="flex flex-col items-center space-y-1 text-slate-400 dark:text-slate-500">
+<span class="material-icons-round text-3xl">shield</span>
+<span class="text-xs font-bold uppercase">Safety</span>
+</button>
+<button class="flex flex-col items-center space-y-1 text-slate-400 dark:text-slate-500">
+<span class="material-icons-round text-3xl">person</span>
+<span class="text-xs font-bold uppercase">Profile</span>
+</button>
+</div>
+<div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
+</div>
+<button class="fixed bottom-4 right-4 bg-slate-200 dark:bg-slate-700 p-3 rounded-full shadow-lg" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-round">brightness_6</span>
+</button>
+
+</body></html>

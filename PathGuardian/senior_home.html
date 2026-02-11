@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PathGuardian - Senior Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: { "display": ["Lexend"] },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            min-height: 100dvh;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .status-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .7
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background-light text-slate-900 min-h-screen flex flex-col font-display">
+    <!-- LARGE Back Button -->
+    <a href="index.html"
+        style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s"
+        onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+    </a>
+
+    <!-- Header -->
+    <header class="pt-20 pb-4 px-8">
+        <div class="flex justify-between items-start">
+            <h1 class="text-4xl font-bold leading-tight tracking-tight">
+                Good Morning, <br />
+                <span class="text-primary">Arthur!</span>
+            </h1>
+            <div class="w-16 h-16 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                <img alt="User Profile" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJKqRRbyjz6SkMksj6BIl3Xj2Z235dPbiQE7C2oPOxJXvAigW0xK-sRhaq7jxSAzrTdEAk0VAJMB5iQTunFoCMyAEMEL099NgSA7C3qUHliMtofxJbmaK5PVGYNvAkEHbxVsai-jJ5nOVGLV03DRbb4Y6FGiOz-IYg9BgOUsLM-p2NMw1GZkedL5lIVWmMxlf9atKjPoTJUts8UVHfCW7DqSBZFVMgKkix0Z8KgMXdNzG_BMZiT56OQzKQmlRkH-amZAppGTewLSkG" />
+            </div>
+        </div>
+        <p class="text-xl mt-3 text-slate-500 font-medium">Where would you like to go today?</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col px-8 space-y-6 pb-48">
+
+        <!-- Destination Input Section -->
+        <section class="bg-white rounded-2xl p-6 shadow-lg border border-slate-100">
+            <label class="block text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">
+                <span class="material-icons text-primary text-sm align-middle mr-1">place</span>
+                Set Your Destination
+            </label>
+            <!-- Current Location (read-only) -->
+            <div class="flex items-center gap-3 bg-blue-50 rounded-xl px-5 py-4 mb-3">
+                <div class="w-4 h-4 bg-primary rounded-full border-2 border-white shadow flex-shrink-0"></div>
+                <span class="text-lg font-semibold text-primary">City Hall MRT Station</span>
+            </div>
+            <!-- Destination Dropdown -->
+            <div class="relative mb-4">
+                <div
+                    class="flex items-center gap-3 bg-slate-50 rounded-xl px-5 py-4 border-2 border-slate-200 focus-within:border-primary transition-colors">
+                    <div class="w-4 h-4 bg-red-500 rounded-full border-2 border-white shadow flex-shrink-0"></div>
+                    <select id="destination-select"
+                        class="flex-1 bg-transparent text-lg font-semibold text-slate-800 outline-none border-none cursor-pointer appearance-none"
+                        style="background:none">
+                        <option value="museum">National Museum of Singapore</option>
+                        <option value="merlion">Merlion Park</option>
+                        <option value="gardens">Gardens by the Bay</option>
+                        <option value="chinatown">Chinatown Heritage Centre</option>
+                        <option value="botanic">Singapore Botanic Gardens</option>
+                    </select>
+                    <span class="material-icons text-slate-400 text-2xl">expand_more</span>
+                </div>
+            </div>
+            <!-- Start Walking Button -->
+            <button onclick="window.location.href='wayfinding.html'"
+                class="w-full bg-primary hover:bg-primary/90 text-white rounded-2xl py-5 flex items-center justify-center gap-3 shadow-xl shadow-primary/30 transition-all active:scale-95 text-xl font-bold">
+                <span class="material-icons text-3xl">directions_walk</span>
+                Start Walking
+            </button>
+        </section>
+
+        <!-- OR Divider -->
+        <div class="flex items-center gap-4">
+            <div class="flex-1 h-px bg-slate-200"></div>
+            <span class="text-sm font-bold text-slate-400 uppercase">or use voice</span>
+            <div class="flex-1 h-px bg-slate-200"></div>
+        </div>
+
+        <!-- Voice Button -->
+        <div class="flex flex-col items-center">
+            <button onclick="window.location.href='voice_input.html'"
+                class="w-40 h-40 bg-primary rounded-full shadow-2xl shadow-primary/40 flex flex-col items-center justify-center border-8 border-white active:scale-95 transition-transform">
+                <span class="material-icons text-5xl text-white mb-1">mic</span>
+                <span class="text-white text-lg font-bold">Tap to Speak</span>
+            </button>
+        </div>
+
+        <!-- Quick Destinations -->
+        <div class="grid grid-cols-2 gap-4">
+            <button onclick="window.location.href='wayfinding.html'"
+                class="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center gap-3 border-2 border-transparent active:border-primary active:bg-primary/5 transition-all">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span class="material-icons text-4xl text-primary">home</span>
+                </div>
+                <span class="text-xl font-bold text-slate-800">Go Home</span>
+            </button>
+            <button onclick="window.location.href='wayfinding.html'"
+                class="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center gap-3 border-2 border-transparent active:border-primary active:bg-primary/5 transition-all">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                    <span class="material-icons text-4xl text-red-600">local_pharmacy</span>
+                </div>
+                <span class="text-xl font-bold text-slate-800">Pharmacy</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- Status Bar -->
+    <div
+        class="fixed bottom-20 left-0 right-0 bg-emerald-50 border-t border-emerald-100 py-3 px-8 flex items-center justify-center gap-2 z-40">
+        <span class="material-icons text-emerald-500 status-pulse">verified_user</span>
+        <span class="text-emerald-700 font-bold text-sm uppercase tracking-wider">System Active & Protected</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white pb-8 pt-3 px-4 border-t border-slate-100 z-50">
+        <div class="flex justify-around items-center">
+            <a class="flex flex-col items-center gap-1 text-primary" href="senior_home.html">
+                <span class="material-icons text-3xl">home</span>
+                <span class="text-xs font-bold">Home</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="senior_home_map.html">
+                <span class="material-icons text-3xl">map</span>
+                <span class="text-xs font-bold">Map</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="safety_checkin.html">
+                <span class="material-icons text-3xl">security</span>
+                <span class="text-xs font-bold">Safety</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="profile.html">
+                <span class="material-icons text-3xl">person</span>
+                <span class="text-xs font-bold">Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- SOS Button -->
+    <div class="fixed bottom-28 right-6 z-50">
+        <button onclick="window.location.href='im_lost.html'"
+            class="w-16 h-16 bg-slate-900 text-white rounded-full shadow-xl flex items-center justify-center active:scale-90 transition-transform">
+            <span class="material-icons text-3xl">sos</span>
+        </button>
+    </div>
+</body>
+
+</html>

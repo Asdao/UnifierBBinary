@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102210",
+                        "error": "#ff4444",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<title>PathGuardian - Voice Confirmation</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col overflow-hidden">
+<!-- LARGE Back Button -->
+<a href="voice_input.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<!-- Status Bar Spacer (iOS Style) -->
+<div class="h-12 w-full"></div>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col px-6 justify-between pb-8">
+<!-- Header & Question Section -->
+<header class="pt-4 animate-fade-in">
+<div class="flex items-center justify-center mb-6">
+<div class="bg-primary/20 p-4 rounded-full">
+<span class="material-icons text-primary text-4xl">record_voice_over</span>
+</div>
+</div>
+<h1 class="text-4xl md:text-5xl font-extrabold text-center leading-tight tracking-tight">
+                Did you mean:
+                <span class="block text-primary mt-2">The Pharmacy on Main St?</span>
+</h1>
+</header>
+<!-- Map Snippet Section -->
+<div class="w-full flex justify-center py-4">
+<div class="w-full max-w-sm aspect-video rounded-xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl relative">
+<img class="w-full h-full object-cover" data-alt="Simple city map with a green pharmacy pin" data-location="Main Street Pharmacy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClXzCHgkyiW02-hAqS11G08js7tuN8O36I9TURvvaqhUOZezBLogyO2ihGVaCi-eMlyJvsOE96u5MmFrvl-hrgF6IXi5NAzMurrYMMcXIa6VCRvuAvuiEuiw7TzY2c-csMiiy56-qvGluu56V8OBFI6NyeKl30F6Bx3aLTTDum3h3iDnhcmbE1Y6m0cTKu35YzvWf8WI_-mOETSmoUb-rNleYuk6NaAeiwSg2R-i12E1VtSGU7xIPnyLxDBbP-BEwqpxAHvke2owLf"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-primary p-2 rounded-full shadow-lg">
+<span class="material-icons text-white text-3xl">location_on</span>
+</div>
+</div>
+<!-- Simple overlay label for accessibility context -->
+<div class="absolute bottom-4 left-4 bg-white/90 dark:bg-black/80 px-4 py-2 rounded-full text-sm font-bold shadow-md">
+                    2.4 miles away
+                </div>
+</div>
+</div>
+<!-- Giant Interaction Buttons -->
+<div class="space-y-4 w-full max-w-md mx-auto">
+<!-- YES BUTTON -->
+<button onclick="window.location.href='wayfinding.html'" class="w-full bg-primary hover:scale-[1.02] active:scale-95 transition-transform py-8 rounded-full shadow-xl flex items-center justify-center gap-4">
+<span class="material-icons text-white text-5xl">check_circle</span>
+<span class="text-white text-3xl font-black">Yes, let's go</span>
+</button>
+<!-- NO BUTTON -->
+<button onclick="window.location.href='voice_input.html'" class="w-full bg-error hover:scale-[1.02] active:scale-95 transition-transform py-8 rounded-full shadow-xl flex items-center justify-center gap-4">
+<span class="material-icons text-white text-5xl">cancel</span>
+<span class="text-white text-3xl font-black">No, try again</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<nav class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-4 pt-4 pb-10">
+<div class="max-w-md mx-auto flex justify-between items-center">
+<!-- Home -->
+<button class="flex flex-col items-center gap-1 group">
+<div class="p-2 rounded-full group-hover:bg-primary/10 transition-colors">
+<span class="material-icons text-slate-400 group-hover:text-primary text-3xl leading-none">home</span>
+</div>
+<span class="text-xs font-bold text-slate-400 group-hover:text-primary uppercase tracking-wider">Home</span>
+</button>
+<!-- Map -->
+<button class="flex flex-col items-center gap-1 group">
+<div class="p-2 rounded-full bg-primary/20">
+<span class="material-icons text-primary text-3xl leading-none">explore</span>
+</div>
+<span class="text-xs font-bold text-primary uppercase tracking-wider">Map</span>
+</button>
+<!-- Safety -->
+<button class="flex flex-col items-center gap-1 group">
+<div class="p-2 rounded-full group-hover:bg-primary/10 transition-colors">
+<span class="material-icons text-slate-400 group-hover:text-primary text-3xl leading-none">health_and_safety</span>
+</div>
+<span class="text-xs font-bold text-slate-400 group-hover:text-primary uppercase tracking-wider">Safety</span>
+</button>
+<!-- Profile -->
+<button class="flex flex-col items-center gap-1 group">
+<div class="p-2 rounded-full group-hover:bg-primary/10 transition-colors">
+<span class="material-icons text-slate-400 group-hover:text-primary text-3xl leading-none">account_circle</span>
+</div>
+<span class="text-xs font-bold text-slate-400 group-hover:text-primary uppercase tracking-wider">Profile</span>
+</button>
+</div>
+</nav>
+<!-- Visual Soundwave/Listening Indicator (Minimal) -->
+<div class="absolute top-16 right-6 flex gap-1 items-end h-8 opacity-30">
+<div class="w-1 bg-primary rounded-full h-4"></div>
+<div class="w-1 bg-primary rounded-full h-8"></div>
+<div class="w-1 bg-primary rounded-full h-6"></div>
+<div class="w-1 bg-primary rounded-full h-2"></div>
+</div>
+</body></html>

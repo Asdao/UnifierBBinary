@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PathGuardian - Senior Connection Setup</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-shadow {
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        }
+        .qr-placeholder {
+            background: repeating-conic-gradient(#135bec 0% 25%, white 0% 50%) 
+                        50% / 20px 20px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- LARGE Back Button -->
+<a href="caregiver_welcome.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<!-- Status Bar (iOS Mockup) -->
+<div class="px-8 pt-4 pb-2 flex justify-between items-center text-sm font-medium">
+<span>9:41</span>
+<div class="flex items-center gap-1.5">
+<span class="material-icons text-base">signal_cellular_alt</span>
+<span class="material-icons text-base">wifi</span>
+<span class="material-icons text-base rotate-90">battery_full</span>
+</div>
+</div>
+<!-- Header & Progress -->
+<header class="px-6 pt-4 pb-2">
+<div class="flex items-center mb-6">
+<button class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center ios-shadow text-primary">
+<span class="material-icons">chevron_left</span>
+</button>
+<div class="flex-1 flex justify-center px-4">
+<div class="flex gap-2">
+<div class="w-8 h-1.5 rounded-full bg-primary"></div>
+<div class="w-8 h-1.5 rounded-full bg-primary"></div>
+<div class="w-8 h-1.5 rounded-full bg-primary/20 dark:bg-primary/10"></div>
+</div>
+</div>
+<div class="w-10"></div>
+</div>
+<h1 class="text-2xl font-bold text-center">Connect Device</h1>
+<p class="text-slate-500 dark:text-slate-400 text-center text-sm mt-2 px-6">
+            Link your Senior's device to PathGuardian to begin monitoring their location and safety.
+        </p>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-6 py-4 overflow-y-auto">
+<!-- Connection Method Tabs -->
+<div class="bg-slate-200/50 dark:bg-slate-800/50 p-1 rounded-full flex mb-8 max-w-xs mx-auto">
+<button class="flex-1 py-2 text-sm font-semibold rounded-full bg-white dark:bg-slate-700 shadow-sm">
+                QR Code
+            </button>
+<button class="flex-1 py-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
+                Link Code
+            </button>
+</div>
+<!-- QR Code Section -->
+<div class="flex flex-col items-center">
+<div class="relative p-6 bg-white dark:bg-slate-800 rounded-xl ios-shadow border-2 border-primary/10 mb-8">
+<div class="w-48 h-48 rounded-lg flex items-center justify-center relative overflow-hidden">
+<img alt="QR Connection Code" class="w-full h-full object-contain" data-alt="A clean QR code for pairing devices" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1yqT7gfTAe5CW0nRazrJpxbiD49jcu4nvOb51CZwpiJSI-BlZQ9T49xdxx_yWa1jtJR0fESdL88q4MxHAeaQCeglF36MNaVFjXCZQ4treg0XSgWmiuHs-TDwsP4mLvpcynwfEns6T1zbhuvPR4m2HPwx52UqPkxViZ2ahqYdMb9lPDvGFbTu7PNtAt13NWwVK3AQJg1ev0ShmPWo9e-SZbbPw7fWd7exlfp_6cPaO0_K9RRqBmPNaTOYFhmx5b9cgN_BFKj562Fh6"/>
+</div>
+<!-- Scanning Frame corners -->
+<div class="absolute top-2 left-2 w-6 h-6 border-t-4 border-l-4 border-primary rounded-tl-md"></div>
+<div class="absolute top-2 right-2 w-6 h-6 border-t-4 border-r-4 border-primary rounded-tr-md"></div>
+<div class="absolute bottom-2 left-2 w-6 h-6 border-b-4 border-l-4 border-primary rounded-bl-md"></div>
+<div class="absolute bottom-2 right-2 w-6 h-6 border-b-4 border-r-4 border-primary rounded-br-md"></div>
+</div>
+<!-- Manual Code Fallback -->
+<div class="text-center mb-8">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2 block">Or use this link code</span>
+<div class="flex gap-2 justify-center">
+<div class="w-10 h-14 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center text-xl font-bold border border-slate-200 dark:border-slate-700 ios-shadow">S</div>
+<div class="w-10 h-14 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center text-xl font-bold border border-slate-200 dark:border-slate-700 ios-shadow">F</div>
+<div class="w-10 h-14 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center text-xl font-bold border border-slate-200 dark:border-slate-700 ios-shadow">9</div>
+<div class="w-10 h-14 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center text-xl font-bold border border-slate-200 dark:border-slate-700 ios-shadow">2</div>
+<div class="w-10 h-14 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center text-xl font-bold border border-slate-200 dark:border-slate-700 ios-shadow">K</div>
+<div class="w-10 h-14 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center text-xl font-bold border border-slate-200 dark:border-slate-700 ios-shadow">7</div>
+</div>
+<button class="mt-4 text-primary text-sm font-semibold flex items-center justify-center mx-auto gap-1">
+<span class="material-icons text-sm">content_copy</span>
+                    Copy Code
+                </button>
+</div>
+<!-- Instructions -->
+<div class="w-full space-y-4 mb-8">
+<div class="flex items-start gap-4 bg-primary/5 dark:bg-primary/10 p-4 rounded-xl">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center flex-shrink-0 font-bold text-sm">1</div>
+<div class="flex-1">
+<p class="text-sm font-semibold">Open PathGuardian on Senior's Phone</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Ensure they are on the "Join a Circle" screen.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 bg-primary/5 dark:bg-primary/10 p-4 rounded-xl">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center flex-shrink-0 font-bold text-sm">2</div>
+<div class="flex-1">
+<p class="text-sm font-semibold">Scan QR Code</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Aim their camera at this screen until you hear a beep.</p>
+</div>
+</div>
+</div>
+<!-- Troubleshooting -->
+<button class="text-slate-400 text-sm font-medium hover:text-primary transition-colors mb-6">
+                Need help pairing devices?
+            </button>
+</div>
+</main>
+<!-- Fixed Bottom Actions -->
+<div class="px-6 pb-10">
+<button class="w-full py-4 bg-primary text-white font-bold rounded-full flex items-center justify-center gap-3 ios-shadow opacity-90" onclick="window.location.href='invite_circle.html'">
+<span class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+            Waiting for connection...
+        </button>
+</div>
+<!-- Navigation Bar (iOS Style) -->
+<nav class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 px-6 pb-8 pt-3">
+<div class="flex justify-between items-center max-w-md mx-auto">
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons">supervised_user_circle</span>
+<span class="text-[10px] font-medium">Circle</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons">map</span>
+<span class="text-[10px] font-medium">Map</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons">history</span>
+<span class="text-[10px] font-medium">History</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</div>
+</div>
+</nav>
+<!-- Home Indicator (iOS Style) -->
+<div class="fixed bottom-1 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
+</body></html>

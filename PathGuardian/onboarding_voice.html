@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PathGuardian - Onboarding Voice Tutorial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .voice-ripple {
+            position: absolute;
+            border: 4px solid #135bec;
+            border-radius: 9999px;
+            opacity: 0.3;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased overflow-hidden">
+<!-- LARGE Back Button -->
+<a href="onboarding_permissions.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<div class="w-full h-12 flex items-center justify-between px-8 pt-4">
+<span class="font-semibold text-sm">9:41</span>
+<div class="flex items-center space-x-2">
+<span class="material-icons text-sm">signal_cellular_alt</span>
+<span class="material-icons text-sm">wifi</span>
+<span class="material-icons text-sm">battery_full</span>
+</div>
+</div>
+<main class="max-w-md mx-auto h-[calc(100vh-3rem)] flex flex-col px-6 pb-12">
+<header class="pt-8 pb-4">
+<div class="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden mb-8">
+<div class="bg-primary h-full w-1/3 rounded-full"></div>
+</div>
+<h1 class="text-3xl font-bold leading-tight mb-2">Step 1: Voice Control</h1>
+<p class="text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed">Let's practice a voice command to keep you safe.</p>
+</header>
+<div class="flex-grow flex flex-col items-center justify-center space-y-12">
+<div class="text-center space-y-4">
+<p class="text-2xl font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Try saying:</p>
+<div class="bg-white dark:bg-slate-800 py-6 px-8 rounded-xl shadow-xl border-2 border-primary/10">
+<span class="text-4xl font-bold text-primary italic">"Take me home"</span>
+</div>
+</div>
+<div class="relative flex items-center justify-center">
+<div class="absolute w-48 h-48 rounded-full border-4 border-primary/20 animate-ping"></div>
+<div class="absolute w-64 h-64 rounded-full border-2 border-primary/10"></div>
+<button class="relative z-10 w-40 h-40 bg-primary rounded-full shadow-2xl flex items-center justify-center transition-transform active:scale-90" onclick="window.location.href='senior_home.html'">
+<span class="material-icons text-white text-7xl">mic</span>
+</button>
+</div>
+<div class="flex items-center space-x-1.5 h-8">
+<div class="w-1.5 h-4 bg-primary/40 rounded-full"></div>
+<div class="w-1.5 h-6 bg-primary/60 rounded-full"></div>
+<div class="w-1.5 h-8 bg-primary rounded-full"></div>
+<div class="w-1.5 h-5 bg-primary/60 rounded-full"></div>
+<div class="w-1.5 h-3 bg-primary/40 rounded-full"></div>
+</div>
+</div>
+<div class="fixed inset-0 z-50 flex items-center justify-center px-10 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-500">
+<div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-2xl text-center border-t-8 border-primary w-full">
+<div class="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-icons text-green-600 dark:text-green-400 text-5xl">check_circle</span>
+</div>
+<h2 class="text-3xl font-bold mb-3">Great job!</h2>
+<p class="text-xl text-slate-600 dark:text-slate-400 mb-8">PathGuardian is now ready to listen to your commands.</p>
+<button class="w-full bg-primary hover:bg-primary/90 text-white py-5 rounded-full text-xl font-bold shadow-lg">
+                    Continue
+                </button>
+</div>
+</div>
+<footer class="mt-auto pt-6 text-center">
+<div class="bg-primary/5 dark:bg-primary/10 rounded-xl p-5 border border-primary/20">
+<p class="text-lg font-medium text-slate-700 dark:text-slate-300">
+<span class="material-icons align-middle mr-1 text-primary">info</span>
+                    Need help? Just tap the blue button and try again.
+                </p>
+</div>
+<div class="mt-8 flex justify-center space-x-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+<div class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+</div>
+</footer>
+</main>
+<div class="hidden">
+<img data-alt="A simplified high contrast map of a neighborhood" data-location="Chicago" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHSnzUiGactVPDueBoZsnB92SmglYnGctYicTLozBBxzuM89c5pFUzz23_JAc1IchiCcGF_uz1dDzkuZRa6wy10qa1HkMexyh3w8-ZcRi-qkGxsfeYui-ICtI-gJIiQJ57K57c8eVB1gniZnMLpEYYCrjJhMd0x9rb8sIf3NM3Am6d9SQ37ML4GhTCLSEb577SN-y5n3x0T7yVOWYi6U-MmqtOzsWNd5gXchW9h-5arn2zffEn9_vhColQIRw3syE2H2MrWhn_Qg9w"/>
+</div>
+<div class="fixed top-[-10%] right-[-10%] w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+<div class="fixed bottom-[-10%] left-[-10%] w-80 h-80 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+
+</body></html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Senior Profile &amp; Caregiver Info</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .emergency-border {
+            border: 4px solid #ef4444;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+<!-- LARGE Back Button -->
+<a href="senior_home.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<!-- Top Status Bar (iOS Style Placeholder) -->
+<div class="h-10 w-full flex justify-between items-center px-6 pt-4">
+<span class="font-semibold text-lg">9:41</span>
+<div class="flex gap-2">
+<span class="material-icons text-xl">signal_cellular_alt</span>
+<span class="material-icons text-xl">wifi</span>
+<span class="material-icons text-xl text-primary">battery_full</span>
+</div>
+</div>
+<!-- Main Content Container -->
+<main class="max-w-md mx-auto px-5 py-6 space-y-8">
+<!-- Profile Header Section -->
+<section class="flex flex-col items-center text-center space-y-4">
+<div class="relative">
+<div class="w-32 h-32 rounded-full border-4 border-primary p-1 overflow-hidden">
+<img alt="Senior Profile Photo" class="w-full h-full object-cover rounded-full" data-alt="Friendly senior man smiling with glasses and grey hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM0j2-tTvKa0_0mMjBEb8C8nYkblRhZVCcrG-zmGAy5aDhdai8UMXpbL-HUni110oI4_z2XHX1jptYCMQJb3bQ4hnY0LMrOO0w3Yr76_pgxoPRwfdvAUHZjZiWNvBZ2tj9oORY_E7A9WGvPq70L0uWctULyZXxcLsMlIfS30950PKyeM3buMeSahCbv-PH3c3D5IjjtaxxRASiMLnXPuKDui_-TZQZZ7R0gkCvQodFJpSHriU748t4IDGOI9SVYKw164AxW4YIOiW0"/>
+</div>
+<div class="absolute bottom-0 right-0 bg-green-500 w-8 h-8 rounded-full border-4 border-background-light dark:border-background-dark"></div>
+</div>
+<div>
+<h1 class="text-3xl font-bold tracking-tight">Arthur Miller</h1>
+<p class="text-lg text-slate-500 dark:text-slate-400 font-medium">PathGuardian Premium User</p>
+</div>
+</section>
+<!-- Emergency Contact Section (Priority) -->
+<section class="emergency-border bg-white dark:bg-slate-900 rounded-xl p-6 shadow-xl">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-icons text-red-500 text-3xl">emergency</span>
+<h2 class="text-2xl font-bold text-red-600">Emergency Contact</h2>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex-1">
+<p class="text-xl font-bold">Emergency Services</p>
+<p class="text-lg text-slate-600 dark:text-slate-400">Local 911 / 112</p>
+</div>
+<button class="bg-red-600 hover:bg-red-700 text-white w-20 h-20 rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-transform">
+<span class="material-icons text-4xl">call</span>
+</button>
+</div>
+</section>
+<!-- Support Team Section -->
+<section class="space-y-4">
+<div class="flex justify-between items-center px-2">
+<h2 class="text-2xl font-bold">My Support Team</h2>
+<button class="text-primary font-bold text-lg">Edit</button>
+</div>
+<!-- Primary Caregiver Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl p-6 shadow-md flex flex-col gap-6">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden">
+<img alt="Caregiver Photo" class="w-full h-full object-cover" data-alt="Professional smiling young woman with dark hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUvT-IB526e4vXYe2YLs8iY1QeyXBWEqa4KSidgNu5DVRs6VrFEVXBTkGPcir09u64_2A5tmB8rjNt26AlmvEpFKXM2ofbeeTnm49QCBV-4vs0rX6lYrOvRb9a0feIC-eTox5Pi2y0Jy9pIri36_3VekII8h5kmzn-ZY7pz-kCznhNL71e3VgJGZB_sIMP3OZx8vlXALpUIp6PRzP1xLeV_RWb-_Y5xnAywuK3ceWcREtCx3sQW3iuIa01lRAitS2-FIpkSMHtsxZJ"/>
+</div>
+<div>
+<p class="text-2xl font-bold">Sarah Miller</p>
+<p class="text-lg text-slate-500 dark:text-slate-400">Daughter • Primary</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="bg-primary text-white py-5 px-4 rounded-full flex items-center justify-center gap-3 active:scale-95 transition-transform">
+<span class="material-icons text-2xl">call</span>
+<span class="text-xl font-bold">Call Sarah</span>
+</button>
+<button class="bg-primary/10 dark:bg-primary/20 text-primary py-5 px-4 rounded-full flex items-center justify-center gap-3 active:scale-95 transition-transform">
+<span class="material-icons text-2xl">chat</span>
+<span class="text-xl font-bold">Message</span>
+</button>
+</div>
+</div>
+<!-- Secondary Contact Card -->
+<div class="bg-white/60 dark:bg-slate-900/60 rounded-xl p-5 shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+<span class="material-icons text-primary">person</span>
+</div>
+<div>
+<p class="text-xl font-bold">Dr. James Wilson</p>
+<p class="text-slate-500 dark:text-slate-400">Family Physician</p>
+</div>
+</div>
+<button class="bg-slate-200 dark:bg-slate-800 p-3 rounded-full">
+<span class="material-icons text-slate-600 dark:text-slate-300">call</span>
+</button>
+</div>
+</section>
+<!-- Account Settings -->
+<section class="space-y-3 pb-8">
+<h2 class="text-2xl font-bold px-2">Settings</h2>
+<div class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden divide-y divide-slate-100 dark:divide-slate-800">
+<button class="w-full p-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-icons text-slate-400">notifications</span>
+<span class="text-xl font-medium">Alert History</span>
+</div>
+<span class="material-icons text-slate-400">chevron_right</span>
+</button>
+<button class="w-full p-5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-red-500">
+<div class="flex items-center gap-4">
+<span class="material-icons">logout</span>
+<span class="text-xl font-medium">Log Out</span>
+</div>
+</button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 px-4 py-3 pb-8 flex justify-around items-center z-50">
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-2 rounded-full group-active:bg-slate-100 dark:group-active:bg-slate-800">
+<span class="material-icons text-3xl text-slate-400">home</span>
+</div>
+<span class="text-sm font-bold text-slate-400">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-2 rounded-full group-active:bg-slate-100 dark:group-active:bg-slate-800">
+<span class="material-icons text-3xl text-slate-400">map</span>
+</div>
+<span class="text-sm font-bold text-slate-400">Map</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-2 rounded-full group-active:bg-slate-100 dark:group-active:bg-slate-800">
+<span class="material-icons text-3xl text-slate-400">shield</span>
+</div>
+<span class="text-sm font-bold text-slate-400">Safety</span>
+</a>
+<a class="flex flex-col items-center gap-1" href="#">
+<div class="p-2 bg-primary/10 rounded-full">
+<span class="material-icons text-3xl text-primary font-bold">person</span>
+</div>
+<span class="text-sm font-bold text-primary">Profile</span>
+</a>
+</nav>
+</body></html>

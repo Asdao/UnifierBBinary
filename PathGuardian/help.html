@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PathGuardian - Senior Help &amp; Tutorials</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#135bec",
+                "background-light": "#f6f6f8",
+                "background-dark": "#101622",
+              },
+              fontFamily: {
+                "display": ["Lexend"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-status-bar {
+            height: 44px;
+        }
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#1a1a1a] dark:text-white">
+<!-- LARGE Back Button -->
+<a href="senior_home.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<!-- Mobile Container (Simulating iPhone Frame) -->
+<div class="max-w-[430px] mx-auto min-h-screen bg-white dark:bg-background-dark flex flex-col relative shadow-2xl">
+<!-- Header / Status Bar Space -->
+<div class="ios-status-bar flex justify-between items-center px-6 pt-2">
+<span class="font-bold text-sm">9:41</span>
+<div class="flex gap-1.5">
+<span class="material-icons text-xs">signal_cellular_alt</span>
+<span class="material-icons text-xs">wifi</span>
+<span class="material-icons text-xs rotate-90">battery_full</span>
+</div>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 px-5 pt-4 pb-32 overflow-y-auto">
+<!-- Page Title -->
+<h1 class="text-3xl font-bold mb-6 tracking-tight text-primary dark:text-white">Help &amp; Tutorials</h1>
+<!-- Big Video Tutorial Button -->
+<button class="w-full bg-primary text-white rounded-xl p-6 flex flex-col items-center justify-center gap-4 mb-8 shadow-lg active:scale-[0.98] transition-transform">
+<div class="bg-white/20 p-4 rounded-full">
+<span class="material-icons text-5xl">play_arrow</span>
+</div>
+<span class="text-2xl font-bold">Watch Video Tutorials</span>
+</button>
+<!-- FAQ Section -->
+<section>
+<h2 class="text-xl font-bold mb-4 uppercase tracking-wider text-gray-500 dark:text-gray-400">Common Questions</h2>
+<div class="space-y-4">
+<!-- FAQ Item 1 -->
+<div class="bg-white dark:bg-[#1e2533] border-4 border-primary rounded-xl overflow-hidden shadow-sm">
+<button class="w-full text-left p-5 flex justify-between items-center gap-4">
+<span class="text-2xl font-semibold leading-tight">How do I go home?</span>
+<span class="material-icons text-4xl text-primary">expand_more</span>
+</button>
+</div>
+<!-- FAQ Item 2 (Expanded State Example) -->
+<div class="bg-white dark:bg-[#1e2533] border-4 border-primary rounded-xl overflow-hidden shadow-sm">
+<button class="w-full text-left p-5 flex justify-between items-center gap-4 border-b border-gray-100 dark:border-gray-800">
+<span class="text-2xl font-semibold leading-tight">How do I talk to the app?</span>
+<span class="material-icons text-4xl text-primary rotate-180">expand_less</span>
+</button>
+<div class="p-6 bg-primary/5">
+<p class="text-xl leading-relaxed mb-4">
+                                Press the blue microphone icon on the Map screen and say "Go Home" or "Find Caregiver".
+                            </p>
+<button class="flex items-center gap-3 bg-white dark:bg-[#2a3345] border-2 border-primary py-3 px-5 rounded-full shadow-sm">
+<span class="material-icons text-primary">volume_up</span>
+<span class="text-lg font-bold">Play Voice Answer</span>
+</button>
+</div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="bg-white dark:bg-[#1e2533] border-4 border-primary rounded-xl overflow-hidden shadow-sm">
+<button class="w-full text-left p-5 flex justify-between items-center gap-4">
+<span class="text-2xl font-semibold leading-tight">How do I find my caregiver?</span>
+<span class="material-icons text-4xl text-primary">expand_more</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Tech Support Call Section -->
+<div class="mt-12">
+<button class="w-full bg-red-600 text-white rounded-xl p-6 flex flex-col items-center justify-center gap-3 shadow-xl active:bg-red-700">
+<span class="material-icons text-5xl">support_agent</span>
+<div class="text-center">
+<span class="block text-2xl font-bold uppercase">Call for Technical Help</span>
+<span class="text-lg opacity-90">Talk to a real person now</span>
+</div>
+</button>
+</div>
+</main>
+<!-- Fixed Bottom Navigation -->
+<nav class="absolute bottom-0 left-0 right-0 bg-white dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 pb-8 pt-4 px-2 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+<div class="flex justify-around items-center">
+<a class="flex flex-col items-center gap-1 group" href="senior_home.html">
+<span class="material-icons text-3xl text-gray-400 group-active:text-primary">home</span>
+<span class="text-sm font-bold text-gray-400">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-icons text-3xl text-gray-400 group-active:text-primary">explore</span>
+<span class="text-sm font-bold text-gray-400">Map</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-icons text-3xl text-gray-400 group-active:text-primary">verified_user</span>
+<span class="text-sm font-bold text-gray-400">Safety</span>
+</a>
+<a class="flex flex-col items-center gap-1" href="#">
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons text-3xl">help</span>
+<span class="text-sm font-bold">Help</span>
+</div>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-icons text-3xl text-gray-400 group-active:text-primary">account_circle</span>
+<span class="text-sm font-bold text-gray-400">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Decoration Element: Senior User Context Image (Hidden from layout flow but requested) -->
+<div class="hidden">
+<img alt="Senior using app" data-alt="A friendly elderly man smiling while using a smartphone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2ID63ucO6O0elo7icv6IL4peMXC7v8iVulMbdwz8K205miSajYjvGoRhaXK1X13SdMBmgNo3r6dZ1wab2BrtEw233EMDapBLADuC6wSA-rn4lz9KaUBs0gE3SzhPp2j5-yqWshImqL-235VdEha0AAJC1KiMMevbeBZ1vEYHHzaMmPufmJRlGSqCTiYTC30sjxiJSTL-6H_mOfPMLmMbCLf6wqwRgWwo7bLvQqsIhH71_ML-ySKxQ2PyaCWh7_S4BbdwEq65aVv9f"/>
+<img alt="Tutorial Placeholder" data-alt="Abstract blue geometric pattern for tutorial cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8m81vu9ypRzq2Quf86E36dMtezgE1FIMFi57EqcmVd8BUu9dYyPBC8LKRZs4teEgoGuPcKVF6WFH4UfVpX1UfQtjCRMfAi_Y4NtuBSeft8J8aF7qRQvMX2DQmR1JjaYnasb-pwTNiur2FVay0sMtQBOTe4sftMqBmhfyL9OnXr3NLjZJs-bVCnnWmB2HozpCQYV6WJ2del7QXFSBPGQDatASE5Zb6A0hi0KPuTELEfPl-cgXhOx5ZAWo3Wr-t_7W_JXUcPEVpxQcw"/>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PathGuardian - Location Journey History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#6366F1",
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#111827",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 23px;
+            top: 40px;
+            bottom: -20px;
+            width: 2px;
+            background: #E5E7EB;
+        }
+        .dark .timeline-line::before {
+            background: #374151;
+        }
+        .timeline-line:last-child::before {
+            display: none;
+        }
+        .map-container {
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gray-100 dark:bg-black flex justify-center items-center min-h-screen">
+<!-- LARGE Back Button -->
+<a href="dashboard_live.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<div class="relative w-[390px] h-[844px] bg-background-light dark:bg-background-dark overflow-hidden shadow-2xl rounded-[3rem] border-[8px] border-gray-800 dark:border-gray-700 flex flex-col">
+<div class="px-8 pt-4 pb-2 flex justify-between items-center text-black dark:text-white">
+<span class="text-sm font-semibold">9:41</span>
+<div class="flex items-center space-gap-1.5">
+<span class="material-icons-outlined text-sm">signal_cellular_alt</span>
+<span class="material-icons-outlined text-sm">wifi</span>
+<span class="material-icons-outlined text-sm">battery_full</span>
+</div>
+</div>
+<header class="px-6 py-4 flex items-center justify-between bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-20">
+<button class="p-2 -ml-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-icons-outlined text-gray-900 dark:text-white">arrow_back_ios_new</span>
+</button>
+<h1 class="text-lg font-bold text-gray-900 dark:text-white">Journey History</h1>
+<button class="p-2 -mr-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-icons-outlined text-gray-900 dark:text-white">calendar_today</span>
+</button>
+</header>
+<div class="flex-1 overflow-y-auto no-scrollbar">
+<div class="relative h-64 w-full bg-gray-200 dark:bg-gray-800 map-container">
+<img alt="Map background with journey route" class="w-full h-full object-cover opacity-80 dark:opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxK5ZMe4IqlikKCy1TQC4dwBB84gb6lZMjFSm2x76hH3FFDAmKgaYiqI99GYWaJR8DJsCReA855skg0DQZRodxxuw8tPhjWBdl-5JGTZ0vXOrrr_CCsbhyTu1Ua0-LcdH1uMLR-YqgCGGQhk4U4qCE0gG-TA6ps7NYMyOrSS1ZhIy6sk1KNK6g9l5ddMBqFfshwxyL081IfpyVc1T3mSc9jIFbHpRo23yD6pwCEDzulvgUeDJkeZxeRvDwYI-BBkje7Da2sFQZslcC"/>
+<div class="absolute bottom-6 left-6 right-6 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-icons-outlined text-primary">person_pin_circle</span>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Current User</p>
+<p class="text-sm font-bold text-gray-900 dark:text-white leading-tight">Robert Chen (Dad)</p>
+</div>
+<div class="ml-auto flex items-center gap-1 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">
+<div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+<span class="text-[10px] font-bold text-green-700 dark:text-green-400 uppercase">Live</span>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 py-4 flex items-center justify-between">
+<h2 class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Today, Oct 24</h2>
+<span class="text-xs font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">4 Journeys</span>
+</div>
+<div class="px-6 space-y-0">
+<div class="relative pb-8 timeline-line">
+<div class="flex gap-4">
+<div class="relative z-10 w-12 h-12 flex items-center justify-center bg-white dark:bg-gray-800 border-2 border-primary rounded-full shadow-sm">
+<span class="material-icons-outlined text-primary">park</span>
+</div>
+<div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-gray-900 dark:text-white">Morning walk to the park</h3>
+<span class="text-[11px] font-medium text-gray-400">08:30 AM</span>
+</div>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1">
+<span class="material-icons-outlined text-xs">location_on</span>
+                                Central Park • 45 min duration
+                            </p>
+<div class="flex items-center gap-2">
+<span class="text-[10px] px-2 py-0.5 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 rounded-md font-bold uppercase">Trusted Location</span>
+</div>
+</div>
+</div>
+</div>
+<div class="relative pb-8 timeline-line">
+<div class="flex gap-4">
+<div class="relative z-10 w-12 h-12 flex items-center justify-center bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-full shadow-sm">
+<span class="material-icons-outlined text-gray-400">shopping_bag</span>
+</div>
+<div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-gray-900 dark:text-white">Quick stop at Grocery</h3>
+<span class="text-[11px] font-medium text-gray-400">11:15 AM</span>
+</div>
+<p class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+<span class="material-icons-outlined text-xs">location_on</span>
+                                Whole Foods Market • 15 min
+                            </p>
+</div>
+</div>
+</div>
+<div class="relative pb-8 timeline-line">
+<div class="flex gap-4">
+<div class="relative z-10 w-12 h-12 flex items-center justify-center bg-white dark:bg-gray-800 border-2 border-primary rounded-full shadow-sm">
+<span class="material-icons-outlined text-primary">home</span>
+</div>
+<div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-gray-900 dark:text-white">Returned Home</h3>
+<span class="text-[11px] font-medium text-gray-400">12:30 PM</span>
+</div>
+<p class="text-xs text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1">
+<span class="material-icons-outlined text-xs">location_on</span>
+                                482 Oak Lane
+                            </p>
+<div class="flex items-center gap-2">
+<span class="text-[10px] px-2 py-0.5 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 rounded-md font-bold uppercase">Safe Zone</span>
+</div>
+</div>
+</div>
+</div>
+<div class="relative pb-10">
+<div class="flex gap-4">
+<div class="relative z-10 w-12 h-12 flex items-center justify-center bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-full shadow-sm">
+<span class="material-icons-outlined text-gray-400">directions_car</span>
+</div>
+<div class="flex-1 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-gray-900 dark:text-white">Drive to Medical Center</h3>
+<span class="text-[11px] font-medium text-gray-400">02:45 PM</span>
+</div>
+<p class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+<span class="material-icons-outlined text-xs">route</span>
+                                4.2 miles • Active monitoring on
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 px-6 py-4 flex justify-between items-center pb-8">
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-icons-outlined">radio_button_checked</span>
+<span class="text-[10px] font-medium">Circle</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-icons-outlined">map</span>
+<span class="text-[10px] font-medium">Map</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons-outlined">history</span>
+<span class="text-[10px] font-bold">History</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-icons-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</button>
+</nav>
+<div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
+</div>
+
+</body></html>

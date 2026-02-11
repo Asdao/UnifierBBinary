@@ -1,0 +1,12 @@
+{
+  "name": "automated-duty-planner-root",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=web-app",
+    "build": "npm run build --workspace=web-app"
+  }
+}
