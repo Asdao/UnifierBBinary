@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PathGuardian - Senior Home Map Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white min-h-screen flex flex-col">
+<!-- LARGE Back Button -->
+<a href="senior_home.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<!-- Top Header -->
+<header class="p-6 pt-12 bg-white dark:bg-background-dark border-b border-primary/10">
+<div class="flex justify-between items-center">
+<div>
+<h1 class="text-3xl font-bold tracking-tight">Hello, Arthur</h1>
+<div class="flex items-center mt-2">
+<span class="flex h-3 w-3 rounded-full bg-green-500 mr-2"></span>
+<span class="text-xl font-medium text-green-600 dark:text-green-400">Status: Safe Zone</span>
+</div>
+</div>
+<button class="bg-primary/10 dark:bg-primary/20 p-3 rounded-full text-primary">
+<span class="material-icons text-3xl">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 p-5 space-y-6 overflow-y-auto pb-40">
+<!-- Map Preview Card -->
+<section class="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border-2 border-primary/20">
+<div class="relative h-56 w-full bg-slate-200 dark:bg-slate-800">
+<div class="absolute inset-0 flex items-center justify-center">
+<!-- Placeholder for high-contrast map -->
+<img alt="Map Preview" class="w-full h-full object-cover opacity-80" data-alt="High contrast simplified map showing safe zone" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjVrQGajpxgC6lqUKYmbq1z64VtaEeog2Cp7y4fER7qOlV8PRD44fxBAm9tEEBKSsSWzwAvsgMZAGTCqRxRzY4bICRxziS-ynlYrdj4aKLERIGBecYaW-CiJYz3uSxZxnc13bClJjRgYHjtQFpS94UeFqFL5mP06EX8o39HaJSIbOXelnmgUBdCFi19KpXDBwrywWRLrm8tlPDuztMAfDBgXB-qVHfqo0ejtg6712Z4lfsTYbrc5ZHi9T6zkJ0F9HTTtNLURbaFERG"/>
+<!-- Map Overlay: Safe Zone Indicator -->
+<div class="absolute inset-0 border-4 border-primary/40 rounded-xl pointer-events-none"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="bg-primary p-2 rounded-full shadow-lg border-4 border-white">
+<span class="material-icons text-white text-3xl">person_pin_circle</span>
+</div>
+</div>
+</div>
+<div class="absolute bottom-4 right-4">
+<button class="bg-primary text-white px-6 py-3 rounded-full font-bold shadow-lg flex items-center">
+<span class="material-icons mr-2">map</span>
+                        View Full Map
+                    </button>
+</div>
+</div>
+<div class="p-4 bg-primary/5 dark:bg-primary/10 flex justify-between items-center">
+<span class="text-lg font-medium text-slate-700 dark:text-slate-300 italic">Current: Sunnyvale Community Park</span>
+<span class="material-icons text-primary">info</span>
+</div>
+</section>
+<!-- Saved Places Section -->
+<section>
+<h2 class="text-2xl font-bold mb-4 px-1">Quick Navigation</h2>
+<div class="grid grid-cols-2 gap-4">
+<!-- Home Card -->
+<button class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border-2 border-transparent active:border-primary active:bg-primary/5 flex flex-col items-center justify-center transition-all h-40">
+<div class="bg-blue-100 dark:bg-blue-900/40 p-4 rounded-full mb-3">
+<span class="material-icons text-primary text-4xl">home</span>
+</div>
+<span class="text-xl font-bold">Home</span>
+</button>
+<!-- Library Card -->
+<button class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border-2 border-transparent active:border-primary active:bg-primary/5 flex flex-col items-center justify-center transition-all h-40">
+<div class="bg-amber-100 dark:bg-amber-900/40 p-4 rounded-full mb-3">
+<span class="material-icons text-amber-600 text-4xl">local_library</span>
+</div>
+<span class="text-xl font-bold">Library</span>
+</button>
+<!-- Park Card -->
+<button class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border-2 border-transparent active:border-primary active:bg-primary/5 flex flex-col items-center justify-center transition-all h-40">
+<div class="bg-green-100 dark:bg-green-900/40 p-4 rounded-full mb-3">
+<span class="material-icons text-green-600 text-4xl">park</span>
+</div>
+<span class="text-xl font-bold">Park</span>
+</button>
+<!-- Doctor Card -->
+<button class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border-2 border-transparent active:border-primary active:bg-primary/5 flex flex-col items-center justify-center transition-all h-40">
+<div class="bg-red-100 dark:bg-red-900/40 p-4 rounded-full mb-3">
+<span class="material-icons text-red-600 text-4xl">medical_services</span>
+</div>
+<span class="text-xl font-bold">Doctor</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Bottom Controls & Navigation -->
+<div class="fixed bottom-0 left-0 right-0 z-50">
+<!-- Voice Search Overlay Area -->
+<div class="px-6 pb-28">
+<button class="w-full bg-primary hover:bg-primary/90 text-white p-6 rounded-full shadow-2xl flex items-center justify-center transition-transform active:scale-95">
+<span class="material-icons text-4xl mr-4">mic</span>
+<span class="text-2xl font-bold">Where to, Arthur?</span>
+</button>
+</div>
+<!-- Tab Bar -->
+<nav class="bg-white dark:bg-background-dark border-t border-primary/10 px-4 py-4 shadow-2xl">
+<div class="flex justify-around items-center">
+<!-- Nav Item: Home -->
+<button class="flex flex-col items-center text-primary group">
+<span class="material-icons text-3xl">home</span>
+<span class="text-xs font-bold mt-1 uppercase tracking-wider">Home</span>
+</button>
+<!-- Nav Item: Map -->
+<button class="flex flex-col items-center text-slate-400 dark:text-slate-500 active:text-primary transition-colors">
+<span class="material-icons text-3xl">explore</span>
+<span class="text-xs font-bold mt-1 uppercase tracking-wider">Map</span>
+</button>
+<!-- Nav Item: Safety -->
+<button class="flex flex-col items-center text-slate-400 dark:text-slate-500 active:text-primary transition-colors">
+<span class="material-icons text-3xl">shield</span>
+<span class="text-xs font-bold mt-1 uppercase tracking-wider">Safety</span>
+</button>
+<!-- Nav Item: Profile -->
+<button class="flex flex-col items-center text-slate-400 dark:text-slate-500 active:text-primary transition-colors">
+<span class="material-icons text-3xl">person</span>
+<span class="text-xs font-bold mt-1 uppercase tracking-wider">Profile</span>
+</button>
+</div>
+</nav>
+</div>
+<!-- Background Decoration -->
+<div class="fixed inset-0 pointer-events-none -z-10 bg-gradient-to-b from-primary/5 to-transparent"></div>
+</body></html>

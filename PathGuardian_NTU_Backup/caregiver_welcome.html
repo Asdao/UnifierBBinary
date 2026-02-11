@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PathGuardian - Add People</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#3670e2", "success": "#10b981", "background-light": "#f6f6f8" },
+                    fontFamily: { "display": ["Lexend"] },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            min-height: 100dvh;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light font-display text-slate-900 min-h-screen flex flex-col">
+    <!-- LARGE Back Button -->
+    <a href="index.html"
+        style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s"
+        onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+    </a>
+
+    <!-- Header -->
+    <header class="pt-24 pb-6 px-8 text-center">
+        <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-icons-round text-primary text-4xl">group_add</span>
+        </div>
+        <h1 class="text-3xl font-bold text-slate-900">Add People</h1>
+        <p class="text-lg text-slate-500 mt-2">Add loved ones you want to monitor</p>
+    </header>
+
+    <!-- People List -->
+    <main class="flex-1 px-8 pb-32 space-y-6">
+        <!-- Already added people (simulated history) -->
+        <div class="space-y-3" id="people-list">
+            <!-- Eleanor (already added) -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi7n6pfQYh7tP57CsqCJb42m3WDR9eVhLdVG_OOmK_uzFzoieFmVaFxR_eEtRjBB75aKfXZ1c1wXmjaEMDV5NT9-NLT500KTuIdGltU2UOTi-8aEvmLyv24cAt6J5mbImMz_RSVpQNBomMqQvxJYiHVsCjIjS1Brx0zLY1-LMhhbzP7Vt2JO8qYyZZaGaeoNUSEVsnifdD54-ZEriKuylDG9bIQLnTspVtjh5kVDFwFriYcVYRDDtpB7zx9L9tl35_XAePtgQqy_4f"
+                    class="w-14 h-14 rounded-full object-cover border-2 border-success/30" alt="">
+                <div class="flex-1">
+                    <h3 class="font-bold text-lg">Eleanor Vance</h3>
+                    <p class="text-sm text-success flex items-center gap-1"><span
+                            class="material-icons-round text-sm">check_circle</span> Connected · GPS active</p>
+                </div>
+                <span class="material-icons-round text-success text-2xl">verified</span>
+            </div>
+
+            <!-- Marcus (already added) -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQkw0aG96YR3GC6LfPxM1YgdVDb_k2s388H7l6Nf0qI5UGCYWRDBNhfsGC-0wDvj-4rReW6o2eXfoBx1MjfwN4-IovnYOOrXKDFOx4F25ju4u8OwXMADvH9SoaY37yetRkKAbrtrV2vel_-w7-ILI2gSDA2gzBauw3XqEcR087ETjg8Q5zoKO-S7Oe3OjuOS26_z2Nm5FDftfdjdzDmL-DhZU5ITGMLJiH8vZwGACAb5SyMiE9uLY_t_gaAQk091zLgI53dtbhbn7l"
+                    class="w-14 h-14 rounded-full object-cover border-2 border-success/30" alt="">
+                <div class="flex-1">
+                    <h3 class="font-bold text-lg">Marcus Vance</h3>
+                    <p class="text-sm text-success flex items-center gap-1"><span
+                            class="material-icons-round text-sm">check_circle</span> Connected · GPS active</p>
+                </div>
+                <span class="material-icons-round text-success text-2xl">verified</span>
+            </div>
+
+            <!-- Grandma Rose (already added) -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsa4B7j3W93_xN2rHIoM3TfkauMGJom5kmxG0jEf7Aqcf_VZWVdlFem6SD15cgXevc_crWjarFTTzWU_fXKn2VhkKSeMcVI8cAjVx_gMQ55ws-xD5jwEfsS-lF43diVj0o80XZHwTs8g4aUyUsaaf9bgw6CdrpsQtxYatxhY1zyOdVV4CPE2QPrIxDwYzLrmOWgF-mv4FPZBoCUO8JUeKc36iTr5UpvA0Dd4Oe5pXRejkO4NBJ8cK8AWNUNu9lAxQWN6-sizAHzggj"
+                    class="w-14 h-14 rounded-full object-cover border-2 border-success/30" alt="">
+                <div class="flex-1">
+                    <h3 class="font-bold text-lg">Grandma Rose</h3>
+                    <p class="text-sm text-success flex items-center gap-1"><span
+                            class="material-icons-round text-sm">check_circle</span> Connected · GPS active</p>
+                </div>
+                <span class="material-icons-round text-success text-2xl">verified</span>
+            </div>
+
+            <!-- Arthur (already added) -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center">
+                    <span class="material-icons-round text-primary text-2xl">person</span>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-lg">Arthur</h3>
+                    <p class="text-sm text-success flex items-center gap-1"><span
+                            class="material-icons-round text-sm">check_circle</span> Connected · GPS active</p>
+                </div>
+                <span class="material-icons-round text-success text-2xl">verified</span>
+            </div>
+        </div>
+
+        <!-- Add New Person Section -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-dashed border-primary/30" id="add-section">
+            <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                <span class="material-icons-round text-primary">person_add</span>
+                Add New Person
+            </h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">Full
+                        Name</label>
+                    <input id="new-name" type="text" placeholder="e.g. Uncle John"
+                        class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-5 py-4 text-lg font-medium focus:border-primary focus:ring-0 outline-none transition-colors">
+                </div>
+                <div>
+                    <label
+                        class="block text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">Relationship</label>
+                    <select
+                        class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-5 py-4 text-lg font-medium focus:border-primary focus:ring-0 outline-none">
+                        <option>Parent</option>
+                        <option>Grandparent</option>
+                        <option>Spouse</option>
+                        <option>Sibling</option>
+                        <option>Friend</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <button onclick="addPerson()"
+                    class="w-full bg-primary text-white py-5 rounded-2xl font-bold text-xl flex items-center justify-center gap-3 shadow-xl shadow-primary/30 active:scale-95 transition-transform">
+                    <span class="material-icons-round text-2xl">add_circle</span>
+                    Add Person
+                </button>
+            </div>
+        </div>
+
+        <!-- Continue to Dashboard -->
+        <button onclick="window.location.href='dashboard_live.html'"
+            class="w-full bg-success text-white py-6 rounded-2xl font-bold text-xl flex items-center justify-center gap-3 shadow-xl shadow-success/30 active:scale-95 transition-transform">
+            <span class="material-icons-round text-2xl">arrow_forward</span>
+            Continue to Dashboard
+        </button>
+    </main>
+
+    <script>
+        function addPerson() {
+            var name = document.getElementById('new-name').value.trim();
+            if (!name) {
+                document.getElementById('new-name').style.borderColor = '#ef4444';
+                return;
+            }
+
+            var card = document.createElement('div');
+            card.className = 'bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4';
+            card.innerHTML = '<div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center"><span class="material-icons-round text-primary text-2xl">person</span></div>' +
+                '<div class="flex-1"><h3 class="font-bold text-lg">' + name + '</h3><p class="text-sm text-success flex items-center gap-1"><span class="material-icons-round text-sm">check_circle</span> Connected · GPS active</p></div>' +
+                '<span class="material-icons-round text-success text-2xl">verified</span>';
+
+            document.getElementById('people-list').appendChild(card);
+            document.getElementById('new-name').value = '';
+            document.getElementById('new-name').style.borderColor = '';
+
+            // Brief success flash
+            card.style.background = '#ecfdf5';
+            setTimeout(function () { card.style.background = 'white'; }, 1000);
+        }
+    </script>
+</body>
+
+</html>

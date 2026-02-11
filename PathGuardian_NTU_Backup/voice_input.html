@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PathGuardian - Voice Input</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#135bec", "background-light": "#f6f6f8" },
+                    fontFamily: { "display": ["Lexend"] },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            min-height: 100dvh;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .listening .pulse-ring {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(19, 91, 236, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 30px rgba(19, 91, 236, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(19, 91, 236, 0);
+            }
+        }
+
+        .active-ring {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light font-display text-slate-900 min-h-screen flex flex-col">
+    <!-- LARGE Back Button -->
+    <a href="senior_home.html"
+        style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s"
+        onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+    </a>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col items-center justify-center px-8 pb-32 pt-24">
+        <!-- Status -->
+        <p class="text-xl font-bold mb-2" id="statusText" style="color:#135bec">Tap the mic to speak</p>
+        <p class="text-sm text-slate-400 mb-8">Say "Take me to National Museum"</p>
+
+        <!-- Transcript Display -->
+        <div class="w-full max-w-md min-h-[80px] bg-white rounded-2xl shadow-lg p-6 mb-8 flex items-center justify-center"
+            id="transcriptBox">
+            <p class="text-2xl font-bold text-center text-slate-800" id="transcriptText"></p>
+        </div>
+
+        <!-- Mic Button -->
+        <div class="relative mb-8">
+            <div class="pulse-ring rounded-full" id="pulseRing">
+                <button id="micBtn" onclick="toggleListening()"
+                    class="w-40 h-40 bg-primary rounded-full shadow-2xl shadow-primary/40 flex items-center justify-center border-8 border-white active:scale-95 transition-transform">
+                    <span class="material-icons text-6xl text-white" id="micIcon">mic</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Confirm Buttons (hidden until speech recognized) -->
+        <div class="w-full max-w-md space-y-4 hidden" id="confirmBtns">
+            <!-- Navigating message -->
+            <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-4 flex items-center gap-3"
+                id="navigatingMsg" style="display:none">
+                <span class="material-icons text-emerald-500 text-2xl animate-spin">sync</span>
+                <p class="text-lg font-bold text-emerald-700">Navigating to destination...</p>
+            </div>
+            <!-- YES - go to wayfinding directly -->
+            <button onclick="confirmDestination()" id="confirmBtn"
+                class="w-full bg-primary hover:bg-primary/90 text-white py-6 rounded-2xl font-bold text-2xl flex items-center justify-center gap-3 shadow-xl shadow-primary/30 active:scale-95 transition-transform">
+                <span class="material-icons text-3xl">check_circle</span>
+                Continue to Navigation
+            </button>
+            <!-- Try Again -->
+            <button onclick="resetListening()"
+                class="w-full bg-slate-200 text-slate-700 py-5 rounded-2xl font-bold text-xl flex items-center justify-center gap-3 active:scale-95 transition-transform">
+                <span class="material-icons text-2xl">replay</span>
+                Try again
+            </button>
+        </div>
+
+        <!-- Cancel -->
+        <div class="w-full max-w-md mt-4">
+            <button onclick="window.location.href='senior_home.html'"
+                class="w-full bg-slate-200 text-slate-700 py-5 rounded-xl font-bold text-xl flex items-center justify-center gap-3 active:scale-95 transition-transform">
+                <span class="material-icons text-2xl">close</span>
+                Cancel
+            </button>
+        </div>
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 pb-8 pt-3 px-6 z-50">
+        <div class="max-w-md mx-auto flex justify-between items-center">
+            <a href="senior_home.html" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-icons text-2xl">home</span>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a href="senior_home_map.html" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-icons text-2xl">near_me</span>
+                <span class="text-xs font-medium">Map</span>
+            </a>
+            <div class="flex flex-col items-center gap-1 text-primary">
+                <div class="p-2 bg-primary/10 rounded-lg">
+                    <span class="material-icons text-2xl">mic_none</span>
+                </div>
+                <span class="text-xs font-bold">Voice</span>
+            </div>
+            <a href="safety_checkin.html" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-icons text-2xl">shield</span>
+                <span class="text-xs font-medium">Safety</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center gap-1 text-slate-400">
+                <span class="material-icons text-2xl">person_outline</span>
+                <span class="text-xs font-medium">Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        let recognition = null;
+        let isListening = false;
+        let finalTranscript = '';
+
+        function initSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                document.getElementById('statusText').textContent = 'Speech recognition not supported';
+                return null;
+            }
+
+            const r = new SpeechRecognition();
+            r.continuous = false;
+            r.interimResults = true;
+            r.lang = 'en-US';
+            r.maxAlternatives = 1;
+
+            r.onstart = () => {
+                isListening = true;
+                document.getElementById('micBtn').classList.add('bg-emerald-500');
+                document.getElementById('micBtn').classList.remove('bg-primary');
+                document.getElementById('pulseRing').classList.add('listening');
+                document.getElementById('statusText').textContent = 'Listening...';
+                document.getElementById('statusText').style.color = '#10b981';
+                document.getElementById('confirmBtns').classList.add('hidden');
+            };
+
+            r.onresult = (event) => {
+                let interimTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        finalTranscript = transcript;
+                    } else {
+                        interimTranscript = transcript;
+                    }
+                }
+                const display = finalTranscript || interimTranscript;
+                // Highlight destination keywords
+                document.getElementById('transcriptText').innerHTML =
+                    '"' + display.replace(/(national museum|museum|pharmacy|home|hospital|park|library|gardens|merlion|botanic)/gi,
+                        '<span class="text-primary">$1</span>') + '"';
+            };
+
+            r.onend = () => {
+                isListening = false;
+                document.getElementById('micBtn').classList.remove('bg-emerald-500');
+                document.getElementById('micBtn').classList.add('bg-primary');
+                document.getElementById('pulseRing').classList.remove('listening');
+
+                if (finalTranscript) {
+                    // Check if destination is mentioned - go directly without asking "did you mean"
+                    const lower = finalTranscript.toLowerCase();
+                    if (lower.includes('museum') || lower.includes('national')) {
+                        document.getElementById('statusText').textContent = '✓ Destination: National Museum';
+                        document.getElementById('statusText').style.color = '#10b981';
+                        document.getElementById('transcriptText').innerHTML = '"Take me to <span class="text-primary">National Museum</span>"';
+                        document.getElementById('confirmBtns').classList.remove('hidden');
+                    } else if (lower.includes('pharmacy') || lower.includes('home') || lower.includes('garden') || lower.includes('merlion') || lower.includes('botanic') || lower.includes('chinatown')) {
+                        document.getElementById('statusText').textContent = '✓ Destination recognized';
+                        document.getElementById('statusText').style.color = '#10b981';
+                        document.getElementById('confirmBtns').classList.remove('hidden');
+                    } else {
+                        // Still show confirm for any input
+                        document.getElementById('statusText').textContent = '✓ Heard you:';
+                        document.getElementById('statusText').style.color = '#135bec';
+                        document.getElementById('confirmBtns').classList.remove('hidden');
+                    }
+                } else {
+                    document.getElementById('statusText').textContent = 'Tap the mic to speak';
+                    document.getElementById('statusText').style.color = '#135bec';
+                }
+            };
+
+            r.onerror = (event) => {
+                isListening = false;
+                document.getElementById('micBtn').classList.remove('bg-emerald-500');
+                document.getElementById('micBtn').classList.add('bg-primary');
+                document.getElementById('pulseRing').classList.remove('listening');
+                if (event.error === 'not-allowed') {
+                    document.getElementById('statusText').textContent = 'Microphone access denied';
+                } else {
+                    document.getElementById('statusText').textContent = 'Error: ' + event.error + '. Tap to try again.';
+                }
+                document.getElementById('statusText').style.color = '#ef4444';
+            };
+
+            return r;
+        }
+
+        function toggleListening() {
+            if (isListening) {
+                recognition?.stop();
+                return;
+            }
+            if (!recognition) recognition = initSpeechRecognition();
+            if (!recognition) return;
+            finalTranscript = '';
+            document.getElementById('transcriptText').innerHTML = '';
+            try { recognition.start(); } catch (e) { recognition.stop(); setTimeout(() => recognition.start(), 100); }
+        }
+
+        function confirmDestination() {
+            // Go directly to wayfinding — NO pharmacy confirm page
+            document.getElementById('confirmBtn').innerHTML = '<span class="material-icons text-3xl animate-spin">sync</span> Navigating...';
+            document.getElementById('navigatingMsg').style.display = 'flex';
+            setTimeout(() => { window.location.href = 'wayfinding.html'; }, 800);
+        }
+
+        function resetListening() {
+            finalTranscript = '';
+            document.getElementById('transcriptText').innerHTML = '';
+            document.getElementById('confirmBtns').classList.add('hidden');
+            document.getElementById('navigatingMsg').style.display = 'none';
+            document.getElementById('statusText').textContent = 'Tap the mic to speak';
+            document.getElementById('statusText').style.color = '#135bec';
+        }
+
+        window.addEventListener('load', () => { recognition = initSpeechRecognition(); });
+    </script>
+</body>
+
+</html>

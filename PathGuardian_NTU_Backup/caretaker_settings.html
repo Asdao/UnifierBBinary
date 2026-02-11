@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PathGuardian - Settings</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { "primary": "#3670e2", "danger": "#ef4444", "warning": "#f59e0b", "success": "#10b981" },
+                    fontFamily: { "display": ["Lexend", "sans-serif"] },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #3670e2;
+        }
+
+        .toggle-checkbox:checked+.toggle-label {
+            background-color: #3670e2;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-display">
+
+    <!-- Header -->
+    <header class="bg-white px-6 pt-10 pb-4 shadow-sm border-b border-slate-100 sticky top-0 z-10">
+        <h1 class="text-3xl font-bold text-slate-900">Settings</h1>
+    </header>
+
+    <main class="flex-grow px-6 py-6 pb-32 space-y-8">
+
+        <!-- Section: Alert Preferences -->
+        <section>
+            <h2 class="text-slate-500 font-bold uppercase text-xs tracking-wider mb-3 ml-1">Alert Preferences</h2>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+
+                <!-- SOS -->
+                <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500">
+                            <span class="material-icons-round">sos</span>
+                        </div>
+                        <span class="font-bold text-slate-800">SOS Calls</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer" checked>
+                        <div
+                            class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Fall Detection -->
+                <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center text-orange-500">
+                            <span class="material-icons-round">personal_injury</span>
+                        </div>
+                        <span class="font-bold text-slate-800">Fall Detection</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer" checked>
+                        <div
+                            class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Mood Distress -->
+                <div class="p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 bg-purple-50 rounded-full flex items-center justify-center text-purple-500">
+                            <span class="material-icons-round">psychology</span>
+                        </div>
+                        <span class="font-bold text-slate-800">Mood Distress</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div
+                            class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary">
+                        </div>
+                    </label>
+                </div>
+
+            </div>
+            <p class="text-xs text-slate-400 mt-2 ml-1">Receive push notifications for enabled alerts.</p>
+        </section>
+
+        <!-- Section: General -->
+        <section>
+            <h2 class="text-slate-500 font-bold uppercase text-xs tracking-wider mb-3 ml-1">General</h2>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <button
+                    class="w-full p-4 border-b border-slate-100 flex items-center justify-between text-left active:bg-slate-50">
+                    <span class="font-bold text-slate-800">Emergency Contacts</span>
+                    <span class="material-icons-round text-slate-400">chevron_right</span>
+                </button>
+                <button
+                    class="w-full p-4 border-b border-slate-100 flex items-center justify-between text-left active:bg-slate-50">
+                    <span class="font-bold text-slate-800">Geofence Radius</span>
+                    <span class="text-sm font-bold text-primary">500m</span>
+                </button>
+                <button class="w-full p-4 flex items-center justify-between text-left active:bg-slate-50">
+                    <span class="font-bold text-slate-800">Sign Out</span>
+                    <span class="material-icons-round text-slate-400">logout</span>
+                </button>
+            </div>
+            <p class="text-center mt-8 text-xs text-slate-400 font-bold uppercase tracking-widest">PathGuardian 3.0</p>
+        </section>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav
+        class="fixed bottom-0 left-0 right-0 z-30 bg-white/90 backdrop-blur-md border-t border-slate-200 pb-6 pt-3 px-6 flex justify-between items-center shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <a href="caretaker_dashboard.html" class="flex flex-col items-center gap-1 text-slate-400">
+            <span class="material-icons-round text-2xl">map</span>
+            <span class="text-[10px] font-medium">Map</span>
+        </a>
+        <a href="caretaker_alerts.html" class="flex flex-col items-center gap-1 text-slate-400">
+            <span class="material-icons-round text-2xl">notifications</span>
+            <span class="text-[10px] font-medium">Alerts</span>
+        </a>
+        <a href="add_people.html"
+            class="w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center -mt-8 border-4 border-slate-50 shadow-xl active:scale-95 transition-transform">
+            <span class="material-icons-round text-3xl">add</span>
+        </a>
+        <a href="caretaker_history.html" class="flex flex-col items-center gap-1 text-slate-400">
+            <span class="material-icons-round text-2xl">history</span>
+            <span class="text-[10px] font-medium">History</span>
+        </a>
+        <a href="caretaker_settings.html" class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-icons-round text-2xl">settings</span>
+            <span class="text-[10px] font-bold">Settings</span>
+        </a>
+    </nav>
+
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PathGuardian - Alert History</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3670e2",
+                        "danger": "#ef4444",
+                        "warning": "#f59e0b",
+                        "success": "#10b981",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111721",
+                    },
+                    fontFamily: { "display": ["Lexend"] },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            min-height: 100dvh;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light text-slate-800 min-h-screen flex flex-col">
+    <!-- LARGE Back Button -->
+    <a href="javascript:history.back()"
+        style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s"
+        onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+    </a>
+
+    <!-- Header -->
+    <header class="pt-20 pb-4 px-6">
+        <h1 class="text-3xl font-bold text-slate-900">Alert History</h1>
+        <p class="text-slate-500 mt-1">All people · Recent activity</p>
+    </header>
+
+    <!-- Person Filter Tabs -->
+    <div class="px-6 flex gap-3 overflow-x-auto pb-4" id="person-tabs">
+        <button onclick="filterAlerts('all')"
+            class="tab-btn active flex items-center gap-2 px-5 py-3 rounded-full text-sm font-bold whitespace-nowrap bg-primary text-white shadow-lg shadow-primary/20 transition-all active:scale-95">
+            <span class="material-icons-round text-lg">groups</span>All People
+        </button>
+        <button onclick="filterAlerts('eleanor')"
+            class="tab-btn flex items-center gap-2 px-5 py-3 rounded-full text-sm font-bold whitespace-nowrap bg-white text-slate-600 border border-slate-200 shadow-sm transition-all active:scale-95">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi7n6pfQYh7tP57CsqCJb42m3WDR9eVhLdVG_OOmK_uzFzoieFmVaFxR_eEtRjBB75aKfXZ1c1wXmjaEMDV5NT9-NLT500KTuIdGltU2UOTi-8aEvmLyv24cAt6J5mbImMz_RSVpQNBomMqQvxJYiHVsCjIjS1Brx0zLY1-LMhhbzP7Vt2JO8qYyZZaGaeoNUSEVsnifdD54-ZEriKuylDG9bIQLnTspVtjh5kVDFwFriYcVYRDDtpB7zx9L9tl35_XAePtgQqy_4f"
+                class="w-7 h-7 rounded-full object-cover" alt="">Eleanor
+        </button>
+        <button onclick="filterAlerts('marcus')"
+            class="tab-btn flex items-center gap-2 px-5 py-3 rounded-full text-sm font-bold whitespace-nowrap bg-white text-slate-600 border border-slate-200 shadow-sm transition-all active:scale-95">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQkw0aG96YR3GC6LfPxM1YgdVDb_k2s388H7l6Nf0qI5UGCYWRDBNhfsGC-0wDvj-4rReW6o2eXfoBx1MjfwN4-IovnYOOrXKDFOx4F25ju4u8OwXMADvH9SoaY37yetRkKAbrtrV2vel_-w7-ILI2gSDA2gzBauw3XqEcR087ETjg8Q5zoKO-S7Oe3OjuOS26_z2Nm5FDftfdjdzDmL-DhZU5ITGMLJiH8vZwGACAb5SyMiE9uLY_t_gaAQk091zLgI53dtbhbn7l"
+                class="w-7 h-7 rounded-full object-cover" alt="">Marcus
+        </button>
+        <button onclick="filterAlerts('grandma')"
+            class="tab-btn flex items-center gap-2 px-5 py-3 rounded-full text-sm font-bold whitespace-nowrap bg-white text-slate-600 border border-slate-200 shadow-sm transition-all active:scale-95">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsa4B7j3W93_xN2rHIoM3TfkauMGJom5kmxG0jEf7Aqcf_VZWVdlFem6SD15cgXevc_crWjarFTTzWU_fXKn2VhkKSeMcVI8cAjVx_gMQ55ws-xD5jwEfsS-lF43diVj0o80XZHwTs8g4aUyUsaaf9bgw6CdrpsQtxYatxhY1zyOdVV4CPE2QPrIxDwYzLrmOWgF-mv4FPZBoCUO8JUeKc36iTr5UpvA0Dd4Oe5pXRejkO4NBJ8cK8AWNUNu9lAxQWN6-sizAHzggj"
+                class="w-7 h-7 rounded-full object-cover" alt="">Grandma Rose
+        </button>
+    </div>
+
+    <!-- Alert List -->
+    <main class="flex-1 overflow-y-auto px-6 pb-32 space-y-4" id="alert-list">
+
+        <!-- ACTIVE Alert (Eleanor) -->
+        <div class="alert-card" data-person="eleanor">
+            <div class="bg-danger/5 border-2 border-danger/30 rounded-2xl p-5 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-danger text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl">
+                    ACTIVE</div>
+                <div class="flex items-center gap-4 mb-4">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi7n6pfQYh7tP57CsqCJb42m3WDR9eVhLdVG_OOmK_uzFzoieFmVaFxR_eEtRjBB75aKfXZ1c1wXmjaEMDV5NT9-NLT500KTuIdGltU2UOTi-8aEvmLyv24cAt6J5mbImMz_RSVpQNBomMqQvxJYiHVsCjIjS1Brx0zLY1-LMhhbzP7Vt2JO8qYyZZaGaeoNUSEVsnifdD54-ZEriKuylDG9bIQLnTspVtjh5kVDFwFriYcVYRDDtpB7zx9L9tl35_XAePtgQqy_4f"
+                        class="w-14 h-14 rounded-full object-cover border-3 border-danger/40" alt="">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-bold text-slate-900">Eleanor Vance</h3>
+                        <p class="text-sm text-danger font-semibold flex items-center gap-1">
+                            <span class="material-icons-round text-sm animate-pulse">report_problem</span>
+                            Unresponsive · 5 min
+                        </p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">No response to check-in. Last seen near Central Park South.</p>
+                <div class="flex gap-3">
+                    <button onclick="window.location.href='deviation_alert.html'"
+                        class="flex-1 bg-danger text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-danger/30 active:scale-95 transition-transform">
+                        <span class="material-icons-round text-2xl">emergency</span>View Alert
+                    </button>
+                    <button
+                        class="w-16 bg-white border-2 border-slate-200 rounded-xl flex items-center justify-center active:scale-95 transition-transform">
+                        <span class="material-icons-round text-slate-500 text-2xl">phone</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warning Alert (Marcus) -->
+        <div class="alert-card" data-person="marcus">
+            <div class="bg-warning/5 border-2 border-warning/30 rounded-2xl p-5">
+                <div class="flex items-center gap-4 mb-3">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQkw0aG96YR3GC6LfPxM1YgdVDb_k2s388H7l6Nf0qI5UGCYWRDBNhfsGC-0wDvj-4rReW6o2eXfoBx1MjfwN4-IovnYOOrXKDFOx4F25ju4u8OwXMADvH9SoaY37yetRkKAbrtrV2vel_-w7-ILI2gSDA2gzBauw3XqEcR087ETjg8Q5zoKO-S7Oe3OjuOS26_z2Nm5FDftfdjdzDmL-DhZU5ITGMLJiH8vZwGACAb5SyMiE9uLY_t_gaAQk091zLgI53dtbhbn7l"
+                        class="w-14 h-14 rounded-full object-cover border-3 border-warning/40" alt="">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-bold text-slate-900">Marcus Vance</h3>
+                        <p class="text-sm text-warning font-semibold flex items-center gap-1">
+                            <span class="material-icons-round text-sm">warning</span>
+                            Route Deviation · 12 min ago
+                        </p>
+                    </div>
+                    <span class="text-xs text-slate-400">10:32 AM</span>
+                </div>
+                <p class="text-sm text-slate-600">Deviated 0.3 mi from usual grocery route. Pace normal.</p>
+                <button
+                    class="w-full mt-4 bg-warning/10 text-warning py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                    <span class="material-icons-round text-2xl">location_on</span>View on Map
+                </button>
+            </div>
+        </div>
+
+        <!-- Resolved Alert (Grandma Rose) -->
+        <div class="alert-card" data-person="grandma">
+            <div class="bg-success/5 border-2 border-success/30 rounded-2xl p-5">
+                <div class="flex items-center gap-4 mb-3">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsa4B7j3W93_xN2rHIoM3TfkauMGJom5kmxG0jEf7Aqcf_VZWVdlFem6SD15cgXevc_crWjarFTTzWU_fXKn2VhkKSeMcVI8cAjVx_gMQ55ws-xD5jwEfsS-lF43diVj0o80XZHwTs8g4aUyUsaaf9bgw6CdrpsQtxYatxhY1zyOdVV4CPE2QPrIxDwYzLrmOWgF-mv4FPZBoCUO8JUeKc36iTr5UpvA0Dd4Oe5pXRejkO4NBJ8cK8AWNUNu9lAxQWN6-sizAHzggj"
+                        class="w-14 h-14 rounded-full object-cover border-3 border-success/40" alt="">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-bold text-slate-900">Grandma Rose</h3>
+                        <p class="text-sm text-success font-semibold flex items-center gap-1">
+                            <span class="material-icons-round text-sm">check_circle</span>
+                            Resolved · Arrived home
+                        </p>
+                    </div>
+                    <span class="text-xs text-slate-400">9:15 AM</span>
+                </div>
+                <p class="text-sm text-slate-600">Was 10 min late from pharmacy. Check-in confirmed safe.</p>
+            </div>
+        </div>
+
+        <!-- Past Alert (Eleanor) -->
+        <div class="alert-card" data-person="eleanor">
+            <div class="bg-white border border-slate-200 rounded-2xl p-5">
+                <div class="flex items-center gap-4 mb-3">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi7n6pfQYh7tP57CsqCJb42m3WDR9eVhLdVG_OOmK_uzFzoieFmVaFxR_eEtRjBB75aKfXZ1c1wXmjaEMDV5NT9-NLT500KTuIdGltU2UOTi-8aEvmLyv24cAt6J5mbImMz_RSVpQNBomMqQvxJYiHVsCjIjS1Brx0zLY1-LMhhbzP7Vt2JO8qYyZZaGaeoNUSEVsnifdD54-ZEriKuylDG9bIQLnTspVtjh5kVDFwFriYcVYRDDtpB7zx9L9tl35_XAePtgQqy_4f"
+                        class="w-14 h-14 rounded-full object-cover border-2 border-slate-200" alt="">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-bold text-slate-900">Eleanor Vance</h3>
+                        <p class="text-sm text-slate-500 flex items-center gap-1">
+                            <span class="material-icons-round text-sm">check_circle</span>
+                            Slow pace detected · Yesterday
+                        </p>
+                    </div>
+                    <span class="text-xs text-slate-400">Yesterday</span>
+                </div>
+                <p class="text-sm text-slate-500">Walking slower than usual near park. Resolved after rest stop.</p>
+            </div>
+        </div>
+
+        <!-- Past Alert (Marcus) -->
+        <div class="alert-card" data-person="marcus">
+            <div class="bg-white border border-slate-200 rounded-2xl p-5">
+                <div class="flex items-center gap-4 mb-3">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQkw0aG96YR3GC6LfPxM1YgdVDb_k2s388H7l6Nf0qI5UGCYWRDBNhfsGC-0wDvj-4rReW6o2eXfoBx1MjfwN4-IovnYOOrXKDFOx4F25ju4u8OwXMADvH9SoaY37yetRkKAbrtrV2vel_-w7-ILI2gSDA2gzBauw3XqEcR087ETjg8Q5zoKO-S7Oe3OjuOS26_z2Nm5FDftfdjdzDmL-DhZU5ITGMLJiH8vZwGACAb5SyMiE9uLY_t_gaAQk091zLgI53dtbhbn7l"
+                        class="w-14 h-14 rounded-full object-cover border-2 border-slate-200" alt="">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-bold text-slate-900">Marcus Vance</h3>
+                        <p class="text-sm text-slate-500 flex items-center gap-1">
+                            <span class="material-icons-round text-sm">check_circle</span>
+                            Left safe zone · 2 days ago
+                        </p>
+                    </div>
+                    <span class="text-xs text-slate-400">Feb 9</span>
+                </div>
+                <p class="text-sm text-slate-500">Exited neighborhood zone briefly. Returned in 20 min.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav
+        class="fixed bottom-0 w-full bg-white/90 backdrop-blur-xl border-t border-slate-200 px-6 pt-3 pb-8 flex justify-between items-center z-50">
+        <a class="flex flex-col items-center gap-1 text-slate-400" href="invite_circle.html">
+            <span class="material-icons-round text-2xl">groups</span>
+            <span class="text-[10px] font-medium">Circle</span>
+        </a>
+        <a class="flex flex-col items-center gap-1 text-slate-400" href="dashboard_live.html">
+            <span class="material-icons-round text-2xl">explore</span>
+            <span class="text-[10px] font-medium">Live Map</span>
+        </a>
+        <a class="flex flex-col items-center gap-1 text-primary" href="alert_escalation.html">
+            <span class="material-icons-round text-2xl">notifications_active</span>
+            <span class="text-[10px] font-bold">Alerts</span>
+        </a>
+        <a class="flex flex-col items-center gap-1 text-slate-400" href="alert_prefs.html">
+            <span class="material-icons-round text-2xl">settings</span>
+            <span class="text-[10px] font-medium">Settings</span>
+        </a>
+    </nav>
+
+    <script>
+        function filterAlerts(person) {
+            // Update tabs
+            document.querySelectorAll('.tab-btn').forEach(function (btn) {
+                btn.classList.remove('bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/20');
+                btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200', 'shadow-sm');
+            });
+            event.currentTarget.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200', 'shadow-sm');
+            event.currentTarget.classList.add('bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/20');
+
+            // Filter cards
+            document.querySelectorAll('.alert-card').forEach(function (card) {
+                if (person === 'all' || card.dataset.person === person) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

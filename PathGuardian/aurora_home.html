@@ -8,9 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script src="js/config.js"></script>
     <script src="js/shared-data.js"></script>
     <script src="js/alert-system.js"></script>
-    <script src="js/vision-simulation.js"></script>
+    <script src="js/aurora-vision.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -186,29 +187,34 @@
             container.insertBefore(item, container.firstChild);
         }
 
-        setInterval(() => {
-            const result = window.VisionSimulation.analyze();
+        async function analysisLoop() {
+            const video = document.getElementById('webcam');
+            const result = await window.AuroraVision.analyze(video);
 
             // Update UI
-            document.getElementById('stat-mood').innerText = result.mood;
-            document.getElementById('stat-hydration').innerText = result.hydration;
-            document.getElementById('stat-safety').innerText = result.safety;
-            document.getElementById('stat-safety').className = result.safety === 'Critical' ? 'text-xl font-bold text-red-500' : 'text-xl font-bold text-green-400';
+            document.getElementById('stat-mood').innerText = result.emotion;
+            document.getElementById('stat-hydration').innerText = result.isHydrating ? 'Needs Water' : 'Secure';
+            document.getElementById('stat-safety').innerText = result.isFalling ? 'Critical' : 'Secure';
+            document.getElementById('stat-safety').className = result.isFalling ? 'text-xl font-bold text-red-500' : 'text-xl font-bold text-green-400';
 
             // Logs
-            if (result.safety === 'Critical') {
+            if (result.isFalling) {
                 addLog('CRITICAL: FALL DETECTED', 'critical');
                 document.getElementById('fall-warning').classList.remove('hidden');
                 setTimeout(() => document.getElementById('fall-warning').classList.add('hidden'), 3000);
-            } else if (Math.random() > 0.7) {
-                addLog(`Detected Mood: ${result.mood}`, 'event');
-            } else if (result.hydration !== 'Secure') {
+            } else if (Math.random() > 0.8) {
+                addLog(`Detected Mood: ${result.emotion}`, 'event');
+            } else if (result.isHydrating) {
                 addLog(`User needs hydration`, 'event');
-            } else {
-                if (Math.random() > 0.8) addLog('Person identified');
             }
 
-        }, 3000);
+            setTimeout(analysisLoop, 1000);
+        }
+
+        // Initialize and start loop
+        window.AuroraVision.init().then(() => {
+            analysisLoop();
+        });
 
     </script>
 </body>

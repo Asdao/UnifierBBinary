@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Safe Zone Setup - PathGuardian</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Material+Icons+Outlined&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#6366f1", // A warm indigo for safety and reliability
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#111827",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: "Inter", sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            min-height: max(884px, 100dvh);
+        }
+        .map-bg { background: #e5e7eb; }
+        .geofence-circle {
+            background: rgba(99, 102, 241, 0.15);
+            border: 2px solid #6366f1;
+            border-radius: 50%;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  <!-- Leaflet.js -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 flex justify-center items-center min-h-screen">
+<!-- LARGE Back Button -->
+<a href="dashboard_live.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<div class="relative w-full max-w-[400px] h-[812px] bg-white dark:bg-gray-900 overflow-hidden shadow-2xl md:rounded-[3rem] border-[8px] border-slate-900 dark:border-slate-800 flex flex-col">
+<div class="flex justify-between items-center px-8 pt-4 pb-2 text-sm font-semibold">
+<span>9:41</span>
+<div class="flex gap-1 items-center">
+<span class="material-icons-outlined text-base">signal_cellular_alt</span>
+<span class="material-icons-outlined text-base">wifi</span>
+<span class="material-icons-outlined text-base">battery_full</span>
+</div>
+</div>
+<div class="px-6 py-4 flex items-center justify-between">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
+<span class="material-icons-outlined text-xl leading-none">arrow_back_ios_new</span>
+</button>
+<div class="text-center">
+<h1 class="text-lg font-bold">Safe Zone Setup</h1>
+<p class="text-[10px] text-slate-400 font-medium uppercase tracking-widest">PathGuardian</p>
+</div>
+<button class="text-primary font-bold px-2 py-1">Save</button>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar">
+<div class="relative h-[380px] w-full map-bg flex items-center justify-center">
+<div class="geofence-circle w-48 h-48 flex items-center justify-center relative">
+<div class="w-8 h-8 bg-primary rounded-full border-4 border-white shadow-lg flex items-center justify-center">
+<span class="material-icons-outlined text-white text-xs">person</span>
+</div>
+</div>
+<div class="absolute bottom-4 right-4 flex flex-col gap-2">
+<button class="w-12 h-12 bg-white dark:bg-slate-800 shadow-lg rounded-full flex items-center justify-center text-slate-600 dark:text-slate-300">
+<span class="material-icons-outlined">my_location</span>
+</button>
+<button class="w-12 h-12 bg-white dark:bg-slate-800 shadow-lg rounded-full flex items-center justify-center text-slate-600 dark:text-slate-300">
+<span class="material-icons-outlined">layers</span>
+</button>
+</div>
+</div>
+<div class="px-6 py-6 space-y-6">
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Zone Radius</label>
+<span class="text-2xl font-bold text-primary">250m</span>
+</div>
+<input class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-primary" max="1000" min="50" type="range" value="250"/>
+<div class="flex justify-between text-xs text-slate-400">
+<span>50m</span>
+<span>1km</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Place Name</label>
+<div class="relative">
+<span class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">edit</span>
+<input class="w-full pl-12 pr-4 py-3 bg-slate-100 dark:bg-slate-800 border-none rounded-xl focus:ring-2 focus:ring-primary dark:text-white placeholder:text-slate-400" placeholder="e.g. Grandma's House" type="text"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Address</label>
+<div class="relative">
+<span class="material-icons-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">location_on</span>
+<input class="w-full pl-12 pr-4 py-3 bg-slate-100 dark:bg-slate-800 border-none rounded-xl focus:ring-2 focus:ring-primary dark:text-white placeholder:text-slate-400" placeholder="Search for an address..." type="text"/>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">PathGuardian Notifications</label>
+<div class="flex gap-2">
+<button class="flex-1 py-3 px-4 rounded-xl border-2 border-primary bg-indigo-50 dark:bg-primary/10 text-primary font-semibold flex items-center justify-center gap-2">
+<span class="material-icons-outlined text-sm">login</span>
+                            Enter
+                        </button>
+<button class="flex-1 py-3 px-4 rounded-xl border-2 border-slate-100 dark:border-slate-800 text-slate-400 font-semibold flex items-center justify-center gap-2">
+<span class="material-icons-outlined text-sm">logout</span>
+                            Leave
+                        </button>
+</div>
+</div>
+<div class="h-20"></div>
+</div>
+</div>
+<div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 px-8 py-4 flex justify-between items-center pb-8">
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons-outlined">trip_origin</span>
+<span class="text-[10px] font-bold">Circle</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">map</span>
+<span class="text-[10px] font-medium">Map</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">history</span>
+<span class="text-[10px] font-medium">History</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</div>
+</div>
+<div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></div>
+</div>
+
+</body></html>

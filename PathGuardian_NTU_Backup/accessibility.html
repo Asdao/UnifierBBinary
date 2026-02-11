@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PathGuardian - Senior Accessibility Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Custom thick slider styling */
+        input[type='range'] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+            width: 100%;
+        }
+        input[type='range']::-webkit-slider-runnable-track {
+            background: #e5e7eb;
+            height: 16px;
+            border-radius: 9999px;
+        }
+        input[type='range']::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -12px;
+            background-color: #135bec;
+            height: 40px;
+            width: 40px;
+            border-radius: 9999px;
+            border: 4px solid white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-black antialiased">
+<!-- LARGE Back Button -->
+<a href="senior_home.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<!-- iOS Status Bar Spacer -->
+<div class="h-12 w-full"></div>
+<!-- Main Container (Phone Form Factor) -->
+<div class="max-w-md mx-auto px-6 pb-32">
+<!-- Header -->
+<header class="flex items-center justify-between mb-8">
+<button class="w-14 h-14 flex items-center justify-center bg-white rounded-full shadow-sm">
+<span class="material-icons text-3xl">arrow_back</span>
+</button>
+<h1 class="text-3xl font-bold tracking-tight">Settings</h1>
+<div class="w-14 h-14"></div> <!-- Spacer for balance -->
+</header>
+<section class="space-y-6">
+<h2 class="text-xl font-semibold text-gray-500 uppercase tracking-widest px-2">Accessibility</h2>
+<!-- Text Size Card -->
+<div class="bg-white p-8 rounded-xl shadow-md border-2 border-transparent">
+<div class="flex items-center justify-between mb-6">
+<span class="material-icons text-primary text-3xl">format_size</span>
+<span class="text-2xl font-bold">Text Size</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="text-lg font-medium text-gray-400">A</span>
+<div class="flex-1">
+<input class="w-full" max="5" min="1" type="range" value="4"/>
+</div>
+<span class="text-4xl font-bold text-black">AAA</span>
+</div>
+<p class="mt-4 text-gray-500 font-medium text-lg">Current size: Extra Large</p>
+</div>
+<!-- Voice Volume Card -->
+<div class="bg-white p-8 rounded-xl shadow-md">
+<div class="flex items-center justify-between mb-6">
+<span class="material-icons text-primary text-3xl">volume_up</span>
+<span class="text-2xl font-bold">Voice Volume</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-icons text-gray-400">volume_mute</span>
+<div class="flex-1">
+<input class="w-full" max="100" min="0" type="range" value="85"/>
+</div>
+<span class="material-icons text-black">volume_up</span>
+</div>
+<p class="mt-4 text-gray-500 font-medium text-lg">Helpful for navigation instructions</p>
+</div>
+<!-- High Contrast Toggle -->
+<div class="bg-white p-8 rounded-xl shadow-md flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+<span class="material-icons text-primary text-3xl">contrast</span>
+</div>
+<span class="text-2xl font-bold">High Contrast</span>
+</div>
+<button class="relative inline-flex h-10 w-20 items-center rounded-full bg-primary">
+<span class="sr-only">Toggle high contrast</span>
+<span class="translate-x-11 inline-block h-8 w-8 transform rounded-full bg-white transition shadow-sm"></span>
+</button>
+</div>
+<!-- Screen Reader Toggle -->
+<div class="bg-white p-8 rounded-xl shadow-md flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+<span class="material-icons text-primary text-3xl">record_voice_over</span>
+</div>
+<div>
+<span class="text-2xl font-bold block">Screen Reader</span>
+<span class="text-gray-500 text-lg">Support for VoiceOver</span>
+</div>
+</div>
+<button class="relative inline-flex h-10 w-20 items-center rounded-full bg-gray-200">
+<span class="sr-only">Toggle screen reader</span>
+<span class="translate-x-1 inline-block h-8 w-8 transform rounded-full bg-white transition shadow-sm"></span>
+</button>
+</div>
+<!-- Help & Guidance -->
+<div class="bg-primary/5 p-8 rounded-xl border-2 border-dashed border-primary/20 flex flex-col items-center text-center">
+<span class="material-icons text-primary text-4xl mb-2">help_outline</span>
+<p class="text-xl font-semibold text-primary">Need help with these settings?</p>
+<button class="mt-4 bg-primary text-white px-8 py-4 rounded-full text-xl font-bold shadow-lg">
+                    Contact Caregiver
+                </button>
+</div>
+</section>
+<!-- Extra spacing for footer -->
+<div class="h-10"></div>
+</div>
+<!-- Persistent Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-6 py-4 pb-8 flex justify-between items-center z-50 shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-icons text-gray-400 text-3xl group-hover:text-primary">home</span>
+<span class="text-sm font-bold text-gray-400 group-hover:text-primary uppercase tracking-tighter">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<span class="material-icons text-gray-400 text-3xl group-hover:text-primary">explore</span>
+<span class="text-sm font-bold text-gray-400 group-hover:text-primary uppercase tracking-tighter">Map</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<div class="w-14 h-14 bg-red-500 rounded-full flex items-center justify-center -mt-8 shadow-xl border-4 border-white">
+<span class="material-icons text-white text-3xl">emergency</span>
+</div>
+<span class="text-sm font-bold text-red-500 uppercase tracking-tighter">Safety</span>
+</button>
+<button class="flex flex-col items-center gap-1">
+<span class="material-icons text-primary text-3xl">settings</span>
+<span class="text-sm font-bold text-primary uppercase tracking-tighter">Profile</span>
+</button>
+</nav>
+<!-- Background Image Decoration -->
+<div class="fixed top-0 right-0 -z-10 opacity-5 pointer-events-none">
+<img alt="Abstract geometric patterns in blue" class="w-96 h-96 object-contain" data-alt="Soft abstract blue geometric shapes background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA73HfO3zxu8UqWP1kPqAWFyI3XVSqCK6ph821Z5RitUKslX6dD180uTxmhpOaOOum0138ShgQ82TsvczoPKQrnxYF_H8wC7xbyDcpxm--AXAU6MP_w9U9-cNJrP6uS528iQU-8x0gpw6PhOm64o6Ny55TIlzNOIuiX8462eTITTV6M_A-VYSiXW_yM6brO7Qd3uZymDOlqpUYz9HkgvA-fKNVUtii3RJQ61qKAT7v6abNdHj9HUes4pe8cLSjaNOdd5ENGUrUqwRkB"/>
+</div>
+</body></html>

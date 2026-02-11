@@ -8,9 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script src="js/config.js"></script>
     <script src="js/shared-data.js"></script>
     <script src="js/alert-system.js"></script>
     <script src="js/speech-utils.js"></script>
+    <script src="js/aurora-core.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -113,17 +115,32 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
-        function sendMsg() {
+        async function sendMsg() {
             const text = msgInput.value.trim();
             if (!text) return;
 
             addMessage(text, true);
             msgInput.value = '';
 
-            // Artificial Delay
-            setTimeout(() => {
-                const latest = window.SharedData.getLatestVisionAnalysis();
-                const response = generateResponse(text, latest.mood);
+            // Show "Thinking..."
+            const typingId = 'typing-' + Date.now();
+            const typingDiv = document.createElement('div');
+            typingDiv.id = typingId;
+            typingDiv.className = "flex gap-4 max-w-2xl mr-auto animate-pulse";
+            typingDiv.innerHTML = `
+                <img src="https://ui-avatars.com/api/?name=Aurora&background=8b5cf6&color=fff" class="w-10 h-10 rounded-full mt-1 shadow-md">
+                <div class="bg-slate-100 p-5 rounded-3xl rounded-tl-none shadow-sm">
+                    <p class="text-slate-400 italic">Aurora is thinking...</p>
+                </div>
+            `;
+            chatContainer.appendChild(typingDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            try {
+                const response = await window.AuroraAI.chat(text);
+
+                // Remove typing indicator
+                document.getElementById(typingId).remove();
 
                 addMessage(response, false);
                 window.AuroraSpeech.speak(response);
@@ -132,8 +149,10 @@
                 if (text.toLowerCase().includes('help') || text.toLowerCase().includes('fall') || text.toLowerCase().includes('dizzy')) {
                     window.AlertSystem.createAlert('self', 'Mood Distress', 'Chat', { lat: 1.29325, lng: 103.85215 });
                 }
-
-            }, 1000);
+            } catch (err) {
+                document.getElementById(typingId).remove();
+                addMessage("I'm sorry, I encountered an error. Please try again.", false);
+            }
         }
 
         function generateResponse(input, mood) {

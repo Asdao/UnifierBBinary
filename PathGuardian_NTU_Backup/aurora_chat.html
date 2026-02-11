@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Aurora - Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script src="js/shared-data.js"></script>
+    <script src="js/alert-system.js"></script>
+    <script src="js/speech-utils.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { "display": ["Outfit", "sans-serif"] },
+                    colors: { "dark-bg": "#0f172a", "card-bg": "#1e293b", "aurora-purple": "#8b5cf6" }
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-white min-h-screen flex flex-col font-display">
+
+    <!-- Header -->
+    <header
+        class="h-16 border-b border-slate-100 flex items-center justify-between px-6 bg-white sticky top-0 z-20 shadow-sm">
+        <div class="flex items-center gap-3">
+            <a href="main_launcher.html"
+                class="text-slate-400 hover:text-slate-800 transition-colors flex items-center gap-2">
+                <span class="material-icons-round">arrow_back</span>
+                <span class="font-bold text-sm">MAIN MENU</span>
+            </a>
+            <div class="flex items-center gap-2 border-l border-slate-200 pl-4 ml-2">
+                <span class="text-xl font-bold text-slate-800 tracking-tight">Aurora Concierge</span>
+            </div>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-aurora-purple">
+            <span class="material-icons-round text-sm">smart_toy</span>
+        </div>
+    </header>
+
+    <!-- Chat Area -->
+    <main class="flex-1 p-6 overflow-y-auto space-y-6 pb-32" id="chat-container">
+        <!-- Initial Message -->
+        <div class="flex gap-4 max-w-2xl">
+            <img src="https://ui-avatars.com/api/?name=Aurora&background=8b5cf6&color=fff"
+                class="w-10 h-10 rounded-full mt-1 shadow-md">
+            <div class="bg-slate-100 p-5 rounded-3xl rounded-tl-none shadow-sm">
+                <p class="text-slate-700 leading-relaxed">
+                    Hello! I'm here to support you. I've been monitoring your status. How can I help you right now?
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Input Area -->
+    <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 p-6 z-30">
+        <div class="max-w-4xl mx-auto flex items-center gap-4">
+
+            <button
+                class="w-12 h-12 rounded-full border border-slate-200 text-slate-400 flex items-center justify-center hover:bg-slate-50 transition-colors">
+                <span class="material-icons-round">delete_outline</span>
+            </button>
+
+            <!-- Text Input -->
+            <div
+                class="flex-1 bg-slate-50 rounded-full border border-slate-200 px-6 py-3 flex items-center gap-3 shadow-inner">
+                <span class="material-icons-round text-slate-400">keyboard</span>
+                <input type="text" id="msg-input" placeholder="Type or speak..."
+                    class="bg-transparent border-none focus:ring-0 flex-1 text-slate-700 font-medium"
+                    onkeypress="if(event.key === 'Enter') sendMsg()">
+            </div>
+
+            <!-- Mic Button -->
+            <button id="mic-btn" onclick="startDictation()"
+                class="w-14 h-14 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all">
+                <span class="material-icons-round text-2xl" id="mic-icon">mic</span>
+            </button>
+
+        </div>
+    </footer>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const msgInput = document.getElementById('msg-input');
+        const micBtn = document.getElementById('mic-btn');
+        const micIcon = document.getElementById('mic-icon');
+        let isListening = false;
+
+        function addMessage(text, isUser = false) {
+            const div = document.createElement('div');
+            div.className = isUser ? "flex gap-4 max-w-2xl ml-auto flex-row-reverse" : "flex gap-4 max-w-2xl mr-auto";
+
+            const avatar = isUser
+                ? `<div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xs mt-1 shadow-md">YOU</div>`
+                : `<img src="https://ui-avatars.com/api/?name=Aurora&background=8b5cf6&color=fff" class="w-10 h-10 rounded-full mt-1 shadow-md">`;
+
+            const bubbleClass = isUser
+                ? "bg-blue-600 text-white p-5 rounded-3xl rounded-tr-none shadow-md"
+                : "bg-slate-100 p-5 rounded-3xl rounded-tl-none shadow-sm";
+
+            div.innerHTML = `
+                ${avatar}
+                <div class="${bubbleClass}">
+                    <p class="${isUser ? 'text-white' : 'text-slate-700'} leading-relaxed">${text}</p>
+                </div>
+            `;
+            chatContainer.appendChild(div);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function sendMsg() {
+            const text = msgInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, true);
+            msgInput.value = '';
+
+            // Artificial Delay
+            setTimeout(() => {
+                const latest = window.SharedData.getLatestVisionAnalysis();
+                const response = generateResponse(text, latest.mood);
+
+                addMessage(response, false);
+                window.AuroraSpeech.speak(response);
+
+                // If distress, trigger alert
+                if (text.toLowerCase().includes('help') || text.toLowerCase().includes('fall') || text.toLowerCase().includes('dizzy')) {
+                    window.AlertSystem.createAlert('self', 'Mood Distress', 'Chat', { lat: 1.29325, lng: 103.85215 });
+                }
+
+            }, 1000);
+        }
+
+        function generateResponse(input, mood) {
+            input = input.toLowerCase();
+            if (input.includes('hello') || input.includes('hi')) return "Hello! I see you are feeling " + mood + " today. How is your day going?";
+            if (input.includes('help') || input.includes('alert')) return "I've alerted your caretakers immediately. Stay where you are.";
+            if (input.includes('sad') || input.includes('anxious')) return "I'm sorry you're feeling that way. Would you like to do a breathing exercise?";
+            if (input.includes('happy')) return "That's wonderful! I love seeing you happy.";
+            return "I understand. I'm here for you. Is there anything specific you need?";
+        }
+
+        function startDictation() {
+            if (isListening) return;
+            isListening = true;
+            micBtn.classList.add('animate-pulse', 'bg-red-500');
+            micIcon.innerText = 'mic_off';
+
+            window.AuroraSpeech.listen(
+                (transcript) => {
+                    msgInput.value = transcript;
+                    stopDictation();
+                    sendMsg();
+                },
+                () => console.log('Listening...'),
+                () => stopDictation()
+            );
+        }
+
+        function stopDictation() {
+            isListening = false;
+            micBtn.classList.remove('animate-pulse', 'bg-red-500');
+            micIcon.innerText = 'mic';
+        }
+
+    </script>
+</body>
+
+</html>

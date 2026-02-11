@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PathGuardian - Where to?</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="js/shared-data.js"></script>
+    <script src="js/alert-system.js"></script>
+    <script src="js/demo-manager.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { "primary": "#2563eb", "primary-dark": "#1e40af", "accent": "#10b981" },
+                    fontFamily: { "display": ["Lexend", "sans-serif"] },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mic-wave {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(37, 99, 235, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-display">
+
+    <!-- Header -->
+    <header
+        class="pt-8 pb-4 px-6 flex justify-between items-center bg-white shadow-sm border-b border-slate-100 z-10 sticky top-0">
+        <a href="index.html"
+            class="w-12 h-12 flex items-center justify-center bg-slate-100 rounded-full active:scale-90 transition-transform">
+            <span class="material-icons text-slate-600">arrow_back</span>
+        </a>
+        <h1 class="text-xl font-bold text-slate-800">Set Destination</h1>
+        <div
+            class="w-12 h-12 flex items-center justify-center rounded-full overflow-hidden border-2 border-white shadow-md">
+            <img src="https://ui-avatars.com/api/?name=User&background=2563eb&color=fff"
+                class="w-full h-full object-cover">
+        </div>
+    </header>
+
+    <main class="flex-grow px-6 py-6 pb-32 space-y-6">
+
+        <!-- Voice Input Primary -->
+        <div class="flex flex-col items-center justify-center py-6">
+            <button id="mic-btn" onclick="toggleListening()"
+                class="w-40 h-40 bg-primary hover:bg-primary-dark rounded-full shadow-2xl flex flex-col items-center justify-center border-8 border-blue-100 active:scale-95 transition-all relative">
+                <span class="material-icons text-6xl text-white mb-2">mic</span>
+                <span class="text-white font-bold text-lg" id="mic-text">Tap to Speak</span>
+            </button>
+            <p class="mt-4 text-slate-500 font-medium text-center max-w-xs" id="status-text">
+                Tap and say where you want to go,<br>e.g. "Take me to the Park"
+            </p>
+        </div>
+
+        <!-- Text Input Fallback -->
+        <div class="bg-white rounded-2xl shadow-lg p-5 border border-slate-100">
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Or type
+                destination</label>
+            <div class="flex gap-2">
+                <input type="text" id="dest-input" placeholder="Search destination..."
+                    class="flex-1 bg-slate-50 border-transparent focus:border-primary focus:ring-0 rounded-xl px-4 py-3 font-semibold text-slate-800">
+                <button onclick="startNavigation()"
+                    class="bg-accent hover:bg-emerald-600 text-white w-14 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20 active:scale-95 transition-transform">
+                    <span class="material-icons">navigation</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Destinations -->
+        <div>
+            <h3 class="text-lg font-bold text-slate-800 mb-3 ml-1">Quick Access</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="setDestination('Home', [1.2920, 103.8540])"
+                    class="bg-white p-5 rounded-2xl shadow-md border border-slate-100 flex flex-col items-center gap-2 active:scale-95 transition-transform">
+                    <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-primary">
+                        <span class="material-icons text-2xl">home</span>
+                    </div>
+                    <span class="font-bold text-slate-700">Home</span>
+                </button>
+                <button onclick="setDestination('Pharmacy', [1.2980, 103.8460])"
+                    class="bg-white p-5 rounded-2xl shadow-md border border-slate-100 flex flex-col items-center gap-2 active:scale-95 transition-transform">
+                    <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-red-500">
+                        <span class="material-icons text-2xl">local_pharmacy</span>
+                    </div>
+                    <span class="font-bold text-slate-700">Pharmacy</span>
+                </button>
+                <button onclick="setDestination('Park', [1.29685, 103.84865])"
+                    class="bg-white p-5 rounded-2xl shadow-md border border-slate-100 flex flex-col items-center gap-2 active:scale-95 transition-transform">
+                    <div class="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-green-500">
+                        <span class="material-icons text-2xl">park</span>
+                    </div>
+                    <span class="font-bold text-slate-700">Park</span>
+                </button>
+                <button onclick="setDestination('Clinic', [1.3000, 103.8500])"
+                    class="bg-white p-5 rounded-2xl shadow-md border border-slate-100 flex flex-col items-center gap-2 active:scale-95 transition-transform">
+                    <div class="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center text-amber-500">
+                        <span class="material-icons text-2xl">local_hospital</span>
+                    </div>
+                    <span class="font-bold text-slate-700">Clinic</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Web Speech API
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const micBtn = document.getElementById('mic-btn');
+        const micText = document.getElementById('mic-text');
+        const statusText = document.getElementById('status-text');
+        const destInput = document.getElementById('dest-input');
+        let recognition;
+        let isListening = false;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                isListening = true;
+                micBtn.classList.add('mic-wave');
+                micText.textContent = "Listening...";
+                statusText.textContent = "Go ahead, I'm listening...";
+                statusText.className = "mt-4 text-primary font-bold text-center max-w-xs animate-pulse";
+            };
+
+            recognition.onend = () => {
+                isListening = false;
+                micBtn.classList.remove('mic-wave');
+                micText.textContent = "Tap to Speak";
+                statusText.className = "mt-4 text-slate-500 font-medium text-center max-w-xs";
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                destInput.value = transcript;
+                statusText.textContent = "Did you say: " + transcript + "?";
+
+                // Simple keyword matching for demo
+                if (transcript.toLowerCase().includes('home')) setDestination('Home', [1.2920, 103.8540]);
+                else if (transcript.toLowerCase().includes('park')) setDestination('Park', [1.29685, 103.84865]);
+                else if (transcript.toLowerCase().includes('pharmacy')) setDestination('Pharmacy', [1.2980, 103.8460]);
+                else {
+                    // Slight delay then go
+                    setTimeout(() => startNavigation(), 1500);
+                }
+            };
+        } else {
+            micBtn.style.display = 'none';
+            statusText.textContent = "Voice input not supported in this browser. Please type below.";
+        }
+
+        function toggleListening() {
+            if (!recognition) return;
+            if (isListening) recognition.stop();
+            else recognition.start();
+        }
+
+        function setDestination(name, coords) {
+            destInput.value = name;
+            // Store destination for navigation page
+            localStorage.setItem('pg_destination', JSON.stringify({ name, coords }));
+            startNavigation();
+        }
+
+        function startNavigation() {
+            const val = destInput.value;
+            if (!val) {
+                destInput.classList.add('animate-pulse', 'border-red-400');
+                setTimeout(() => destInput.classList.remove('animate-pulse', 'border-red-400'), 1000);
+                return;
+            }
+            // If manual text without coords, mock some coords for demo
+            if (!localStorage.getItem('pg_destination') || JSON.parse(localStorage.getItem('pg_destination')).name !== val) {
+                localStorage.setItem('pg_destination', JSON.stringify({ name: val, coords: [1.29685, 103.84865] }));
+            }
+
+            window.location.href = 'user_navigate.html';
+        }
+    </script>
+</body>
+
+</html>

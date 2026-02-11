@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PathGuardian - Caregiver Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#3670e2", "danger": "#ef4444", "warning": "#f59e0b", "success": "#10b981", "background-light": "#f6f6f8" },
+                    fontFamily: { "display": ["Lexend"] },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            min-height: 100dvh;
+        }
+
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .pulse-dot {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(54, 112, 226, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(54, 112, 226, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(54, 112, 226, 0);
+            }
+        }
+    </style>
+</head>
+
+<body class="font-display bg-background-light text-slate-900 h-screen overflow-hidden">
+    <!-- LARGE Back Button -->
+    <a href="index.html"
+        style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s"
+        onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+    </a>
+
+    <main class="relative h-full w-full">
+        <!-- Full-screen Live Map -->
+        <div id="live-map" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;"></div>
+
+        <!-- Top Tabs: Map / Alerts / Settings -->
+        <div class="absolute top-4 left-24 right-4 z-[1000] flex gap-2">
+            <button onclick="showTab('map')" id="tab-map"
+                class="tab-btn flex-1 bg-primary text-white py-3 rounded-2xl font-bold text-sm shadow-lg flex items-center justify-center gap-1 active:scale-95 transition-all">
+                <span class="material-icons-round text-lg">map</span> Map
+            </button>
+            <button onclick="showTab('alerts')" id="tab-alerts"
+                class="tab-btn flex-1 bg-white/90 text-slate-600 py-3 rounded-2xl font-bold text-sm shadow-lg flex items-center justify-center gap-1 active:scale-95 transition-all ios-blur">
+                <span class="material-icons-round text-lg">notifications</span> Alerts
+            </button>
+            <button onclick="showTab('settings')" id="tab-settings"
+                class="tab-btn flex-1 bg-white/90 text-slate-600 py-3 rounded-2xl font-bold text-sm shadow-lg flex items-center justify-center gap-1 active:scale-95 transition-all ios-blur">
+                <span class="material-icons-round text-lg">settings</span> Settings
+            </button>
+        </div>
+
+        <!-- MAP PANEL (default visible) -->
+        <div id="panel-map" class="absolute bottom-24 left-4 right-4 z-[1000]">
+            <!-- Person Cards -->
+            <div class="space-y-3">
+                <!-- Arthur (walking now) -->
+                <div class="bg-white/95 ios-blur rounded-2xl shadow-xl p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                                <span class="material-icons-round text-primary">directions_walk</span>
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-slate-900">Arthur is walking</h2>
+                                <p class="text-sm text-slate-500">City Hall MRT → National Museum</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="block text-xl font-bold text-primary">5 min</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">ETA</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="window.location.href='wayfinding.html'"
+                            class="flex-1 bg-primary text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:scale-95 transition-all text-sm">
+                            <span class="material-icons-round text-lg">visibility</span> View Route
+                        </button>
+                        <button
+                            class="w-14 bg-slate-100 rounded-xl flex items-center justify-center active:scale-95 transition-all">
+                            <span class="material-icons-round text-slate-500">phone</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Eleanor (at home) -->
+                <div class="bg-white/95 ios-blur rounded-2xl shadow-xl p-4">
+                    <div class="flex items-center gap-3">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi7n6pfQYh7tP57CsqCJb42m3WDR9eVhLdVG_OOmK_uzFzoieFmVaFxR_eEtRjBB75aKfXZ1c1wXmjaEMDV5NT9-NLT500KTuIdGltU2UOTi-8aEvmLyv24cAt6J5mbImMz_RSVpQNBomMqQvxJYiHVsCjIjS1Brx0zLY1-LMhhbzP7Vt2JO8qYyZZaGaeoNUSEVsnifdD54-ZEriKuylDG9bIQLnTspVtjh5kVDFwFriYcVYRDDtpB7zx9L9tl35_XAePtgQqy_4f"
+                            class="w-10 h-10 rounded-full object-cover" alt="">
+                        <div class="flex-1">
+                            <h3 class="font-bold text-slate-900">Eleanor</h3>
+                            <p class="text-sm text-success flex items-center gap-1"><span
+                                    class="material-icons-round text-xs">home</span> At home · Safe</p>
+                        </div>
+                        <span class="w-3 h-3 rounded-full bg-success"></span>
+                    </div>
+                </div>
+
+                <!-- Marcus (at pharmacy) -->
+                <div class="bg-white/95 ios-blur rounded-2xl shadow-xl p-4">
+                    <div class="flex items-center gap-3">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQkw0aG96YR3GC6LfPxM1YgdVDb_k2s388H7l6Nf0qI5UGCYWRDBNhfsGC-0wDvj-4rReW6o2eXfoBx1MjfwN4-IovnYOOrXKDFOx4F25ju4u8OwXMADvH9SoaY37yetRkKAbrtrV2vel_-w7-ILI2gSDA2gzBauw3XqEcR087ETjg8Q5zoKO-S7Oe3OjuOS26_z2Nm5FDftfdjdzDmL-DhZU5ITGMLJiH8vZwGACAb5SyMiE9uLY_t_gaAQk091zLgI53dtbhbn7l"
+                            class="w-10 h-10 rounded-full object-cover" alt="">
+                        <div class="flex-1">
+                            <h3 class="font-bold text-slate-900">Marcus</h3>
+                            <p class="text-sm text-primary flex items-center gap-1"><span
+                                    class="material-icons-round text-xs">local_pharmacy</span> At pharmacy · 15 min</p>
+                        </div>
+                        <span class="w-3 h-3 rounded-full bg-primary"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALERTS PANEL -->
+        <div id="panel-alerts" class="absolute top-20 bottom-20 left-0 right-0 z-[1000] hidden overflow-y-auto px-4">
+            <div class="space-y-3">
+                <!-- Active alert -->
+                <div class="bg-danger/5 border-2 border-danger/30 rounded-2xl p-5">
+                    <div class="absolute-top-0 right-0 bg-danger text-white text-xs font-bold px-3 py-1 rounded-bl-xl"
+                        style="position:absolute;top:0;right:0;border-radius:0 1rem 0 1rem">ACTIVE</div>
+                    <div class="flex items-center gap-3 mb-3 pt-2">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi7n6pfQYh7tP57CsqCJb42m3WDR9eVhLdVG_OOmK_uzFzoieFmVaFxR_eEtRjBB75aKfXZ1c1wXmjaEMDV5NT9-NLT500KTuIdGltU2UOTi-8aEvmLyv24cAt6J5mbImMz_RSVpQNBomMqQvxJYiHVsCjIjS1Brx0zLY1-LMhhbzP7Vt2JO8qYyZZaGaeoNUSEVsnifdD54-ZEriKuylDG9bIQLnTspVtjh5kVDFwFriYcVYRDDtpB7zx9L9tl35_XAePtgQqy_4f"
+                            class="w-12 h-12 rounded-full object-cover border-2 border-danger/40" alt="">
+                        <div class="flex-1">
+                            <h3 class="font-bold">Eleanor Vance</h3>
+                            <p class="text-sm text-danger font-semibold flex items-center gap-1">
+                                <span class="material-icons-round text-sm animate-pulse">report_problem</span>
+                                Unresponsive · 5 min
+                            </p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-3">No response to check-in. Last seen near Central Park South.
+                    </p>
+                    <button onclick="window.location.href='deviation_alert.html'"
+                        class="w-full bg-danger text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-danger/30 active:scale-95 transition-transform">
+                        <span class="material-icons-round">emergency</span>View Alert
+                    </button>
+                </div>
+
+                <!-- Warning -->
+                <div class="bg-warning/5 border-2 border-warning/30 rounded-2xl p-5 relative">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQkw0aG96YR3GC6LfPxM1YgdVDb_k2s388H7l6Nf0qI5UGCYWRDBNhfsGC-0wDvj-4rReW6o2eXfoBx1MjfwN4-IovnYOOrXKDFOx4F25ju4u8OwXMADvH9SoaY37yetRkKAbrtrV2vel_-w7-ILI2gSDA2gzBauw3XqEcR087ETjg8Q5zoKO-S7Oe3OjuOS26_z2Nm5FDftfdjdzDmL-DhZU5ITGMLJiH8vZwGACAb5SyMiE9uLY_t_gaAQk091zLgI53dtbhbn7l"
+                            class="w-12 h-12 rounded-full object-cover border-2 border-warning/40" alt="">
+                        <div class="flex-1">
+                            <h3 class="font-bold">Marcus Vance</h3>
+                            <p class="text-sm text-warning font-semibold flex items-center gap-1">
+                                <span class="material-icons-round text-sm">warning</span>
+                                Route Deviation · 12 min ago
+                            </p>
+                        </div>
+                        <span class="text-xs text-slate-400">10:32 AM</span>
+                    </div>
+                    <p class="text-sm text-slate-600">Deviated 0.3 mi from usual grocery route. Pace normal.</p>
+                </div>
+
+                <!-- Resolved -->
+                <div class="bg-success/5 border-2 border-success/30 rounded-2xl p-5 relative">
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsa4B7j3W93_xN2rHIoM3TfkauMGJom5kmxG0jEf7Aqcf_VZWVdlFem6SD15cgXevc_crWjarFTTzWU_fXKn2VhkKSeMcVI8cAjVx_gMQ55ws-xD5jwEfsS-lF43diVj0o80XZHwTs8g4aUyUsaaf9bgw6CdrpsQtxYatxhY1zyOdVV4CPE2QPrIxDwYzLrmOWgF-mv4FPZBoCUO8JUeKc36iTr5UpvA0Dd4Oe5pXRejkO4NBJ8cK8AWNUNu9lAxQWN6-sizAHzggj"
+                            class="w-12 h-12 rounded-full object-cover border-2 border-success/40" alt="">
+                        <div class="flex-1">
+                            <h3 class="font-bold">Grandma Rose</h3>
+                            <p class="text-sm text-success font-semibold flex items-center gap-1">
+                                <span class="material-icons-round text-sm">check_circle</span>
+                                Resolved · Arrived home
+                            </p>
+                        </div>
+                        <span class="text-xs text-slate-400">9:15 AM</span>
+                    </div>
+                    <p class="text-sm text-slate-600">Was 10 min late from pharmacy. Check-in confirmed safe.</p>
+                </div>
+
+                <!-- Past alerts -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center">
+                            <span class="material-icons-round text-slate-400">person</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold">Arthur</h3>
+                            <p class="text-sm text-slate-500">Slow pace detected · Yesterday</p>
+                        </div>
+                        <span class="text-xs text-slate-400">Yesterday</span>
+                    </div>
+                </div>
+                <div class="bg-white border border-slate-200 rounded-2xl p-5">
+                    <div class="flex items-center gap-3">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi7n6pfQYh7tP57CsqCJb42m3WDR9eVhLdVG_OOmK_uzFzoieFmVaFxR_eEtRjBB75aKfXZ1c1wXmjaEMDV5NT9-NLT500KTuIdGltU2UOTi-8aEvmLyv24cAt6J5mbImMz_RSVpQNBomMqQvxJYiHVsCjIjS1Brx0zLY1-LMhhbzP7Vt2JO8qYyZZaGaeoNUSEVsnifdD54-ZEriKuylDG9bIQLnTspVtjh5kVDFwFriYcVYRDDtpB7zx9L9tl35_XAePtgQqy_4f"
+                            class="w-12 h-12 rounded-full object-cover" alt="">
+                        <div class="flex-1">
+                            <h3 class="font-bold">Eleanor</h3>
+                            <p class="text-sm text-slate-500">Geofence exit · 2 days ago</p>
+                        </div>
+                        <span class="text-xs text-slate-400">Feb 9</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SETTINGS PANEL -->
+        <div id="panel-settings" class="absolute top-20 bottom-20 left-0 right-0 z-[1000] hidden overflow-y-auto px-4">
+            <div class="space-y-3">
+                <div class="bg-white/95 ios-blur rounded-2xl shadow-xl p-5">
+                    <h3 class="font-bold text-lg mb-4">Alert Preferences</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="material-icons-round text-danger">notifications_active</span>
+                                <span class="font-medium">Route Deviation Alerts</span>
+                            </div>
+                            <div class="w-12 h-7 bg-primary rounded-full relative cursor-pointer">
+                                <div class="absolute top-1 right-1 w-5 h-5 bg-white rounded-full shadow"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="material-icons-round text-warning">speed</span>
+                                <span class="font-medium">Slow Pace Warnings</span>
+                            </div>
+                            <div class="w-12 h-7 bg-primary rounded-full relative cursor-pointer">
+                                <div class="absolute top-1 right-1 w-5 h-5 bg-white rounded-full shadow"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="material-icons-round text-primary">place</span>
+                                <span class="font-medium">Geofence Notifications</span>
+                            </div>
+                            <div class="w-12 h-7 bg-primary rounded-full relative cursor-pointer">
+                                <div class="absolute top-1 right-1 w-5 h-5 bg-white rounded-full shadow"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="material-icons-round text-success">timer</span>
+                                <span class="font-medium">Check-in Reminders</span>
+                            </div>
+                            <div class="w-12 h-7 bg-slate-300 rounded-full relative cursor-pointer">
+                                <div class="absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/95 ios-blur rounded-2xl shadow-xl p-5">
+                    <h3 class="font-bold text-lg mb-4">Managed People</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center"><span
+                                    class="material-icons-round text-primary">person</span></div>
+                            <div class="flex-1"><span class="font-bold">Arthur</span><br><span
+                                    class="text-xs text-slate-500">Active · GPS connected</span></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi7n6pfQYh7tP57CsqCJb42m3WDR9eVhLdVG_OOmK_uzFzoieFmVaFxR_eEtRjBB75aKfXZ1c1wXmjaEMDV5NT9-NLT500KTuIdGltU2UOTi-8aEvmLyv24cAt6J5mbImMz_RSVpQNBomMqQvxJYiHVsCjIjS1Brx0zLY1-LMhhbzP7Vt2JO8qYyZZaGaeoNUSEVsnifdD54-ZEriKuylDG9bIQLnTspVtjh5kVDFwFriYcVYRDDtpB7zx9L9tl35_XAePtgQqy_4f"
+                                class="w-10 h-10 rounded-full object-cover" alt="">
+                            <div class="flex-1"><span class="font-bold">Eleanor</span><br><span
+                                    class="text-xs text-slate-500">Active · GPS connected</span></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQkw0aG96YR3GC6LfPxM1YgdVDb_k2s388H7l6Nf0qI5UGCYWRDBNhfsGC-0wDvj-4rReW6o2eXfoBx1MjfwN4-IovnYOOrXKDFOx4F25ju4u8OwXMADvH9SoaY37yetRkKAbrtrV2vel_-w7-ILI2gSDA2gzBauw3XqEcR087ETjg8Q5zoKO-S7Oe3OjuOS26_z2Nm5FDftfdjdzDmL-DhZU5ITGMLJiH8vZwGACAb5SyMiE9uLY_t_gaAQk091zLgI53dtbhbn7l"
+                                class="w-10 h-10 rounded-full object-cover" alt="">
+                            <div class="flex-1"><span class="font-bold">Marcus</span><br><span
+                                    class="text-xs text-slate-500">Active · GPS connected</span></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsa4B7j3W93_xN2rHIoM3TfkauMGJom5kmxG0jEf7Aqcf_VZWVdlFem6SD15cgXevc_crWjarFTTzWU_fXKn2VhkKSeMcVI8cAjVx_gMQ55ws-xD5jwEfsS-lF43diVj0o80XZHwTs8g4aUyUsaaf9bgw6CdrpsQtxYatxhY1zyOdVV4CPE2QPrIxDwYzLrmOWgF-mv4FPZBoCUO8JUeKc36iTr5UpvA0Dd4Oe5pXRejkO4NBJ8cK8AWNUNu9lAxQWN6-sizAHzggj"
+                                class="w-10 h-10 rounded-full object-cover" alt="">
+                            <div class="flex-1"><span class="font-bold">Grandma Rose</span><br><span
+                                    class="text-xs text-slate-500">Active · GPS connected</span></div>
+                        </div>
+                    </div>
+                    <button onclick="window.location.href='caregiver_welcome.html'"
+                        class="w-full mt-4 bg-primary/10 text-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                        <span class="material-icons-round">person_add</span>
+                        Add Another Person
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <nav
+            class="absolute bottom-0 w-full bg-white/90 ios-blur border-t border-slate-200 px-6 pt-3 pb-8 flex justify-between items-center z-[1001]">
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="invite_circle.html">
+                <span class="material-icons-round text-2xl">groups</span>
+                <span class="text-[10px] font-medium">Circle</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-primary" href="dashboard_live.html">
+                <span class="material-icons-round text-2xl">explore</span>
+                <span class="text-[10px] font-bold">Live Map</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="alert_escalation.html">
+                <span class="material-icons-round text-2xl">notifications_active</span>
+                <span class="text-[10px] font-medium">Alerts</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="alert_prefs.html">
+                <span class="material-icons-round text-2xl">settings</span>
+                <span class="text-[10px] font-medium">Settings</span>
+            </a>
+        </nav>
+    </main>
+
+    <script>
+        // Leaflet Map — show live positions
+        var map = L.map('live-map', {
+            center: [1.2950, 103.8505],
+            zoom: 15,
+            zoomControl: false,
+            attributionControl: false
+        });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+
+        // Arthur's route
+        var arthurRoute = [
+            [1.29325, 103.85215],
+            [1.29400, 103.85130],
+            [1.29480, 103.85010],
+            [1.29560, 103.84940],
+            [1.29650, 103.84880],
+            [1.29685, 103.84865],
+        ];
+        L.polyline(arthurRoute, { color: '#3670e2', weight: 4, opacity: 0.7, dashArray: '8 6' }).addTo(map);
+
+        // Arthur marker (moving)
+        var arthurIcon = L.divIcon({
+            html: '<div style="position:relative"><div style="width:20px;height:20px;background:#3670e2;border:3px solid white;border-radius:50%;box-shadow:0 0 0 4px rgba(54,112,226,0.3)" class="pulse-dot"></div><div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);background:#3670e2;color:white;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:bold;white-space:nowrap;font-family:Lexend">Arthur</div></div>',
+            iconSize: [20, 20], iconAnchor: [10, 10], className: ''
+        });
+        var arthurMarker = L.marker(arthurRoute[0], { icon: arthurIcon, zIndexOffset: 1000 }).addTo(map);
+
+        // Destination
+        var destIcon = L.divIcon({
+            html: '<div style="position:relative"><div style="width:18px;height:18px;background:#ef4444;border:2px solid white;border-radius:50%"></div><div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:#ef4444;color:white;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:bold;white-space:nowrap;font-family:Lexend">Museum</div></div>',
+            iconSize: [18, 18], iconAnchor: [9, 9], className: ''
+        });
+        L.marker([1.29685, 103.84865], { icon: destIcon }).addTo(map);
+
+        // Eleanor (at home)
+        var eleanorIcon = L.divIcon({
+            html: '<div style="position:relative"><div style="width:16px;height:16px;background:#10b981;border:2px solid white;border-radius:50%"></div><div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:#10b981;color:white;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:bold;white-space:nowrap;font-family:Lexend">Eleanor</div></div>',
+            iconSize: [16, 16], iconAnchor: [8, 8], className: ''
+        });
+        L.marker([1.2920, 103.8540], { icon: eleanorIcon }).addTo(map);
+
+        // Marcus (at pharmacy)
+        var marcusIcon = L.divIcon({
+            html: '<div style="position:relative"><div style="width:16px;height:16px;background:#f59e0b;border:2px solid white;border-radius:50%"></div><div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:#f59e0b;color:white;padding:1px 6px;border-radius:6px;font-size:9px;font-weight:bold;white-space:nowrap;font-family:Lexend">Marcus</div></div>',
+            iconSize: [16, 16], iconAnchor: [8, 8], className: ''
+        });
+        L.marker([1.2980, 103.8460], { icon: marcusIcon }).addTo(map);
+
+        // Animate Arthur walking
+        var aStep = 0;
+        function moveArthur() {
+            if (aStep >= arthurRoute.length) aStep = 0;
+            arthurMarker.setLatLng(arthurRoute[aStep]);
+            aStep++;
+            setTimeout(moveArthur, 5000);
+        }
+        setTimeout(moveArthur, 3000);
+
+        // Tab switching
+        function showTab(tab) {
+            ['map', 'alerts', 'settings'].forEach(function (t) {
+                document.getElementById('panel-' + t).classList.toggle('hidden', t !== tab);
+                var btn = document.getElementById('tab-' + t);
+                if (t === tab) {
+                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.remove('bg-white/90', 'text-slate-600');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-white/90', 'text-slate-600');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

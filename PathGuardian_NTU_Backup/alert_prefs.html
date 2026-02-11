@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PathGuardian - Alert Preferences</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-shadow {
+            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.06);
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<!-- LARGE Back Button -->
+<a href="dashboard_live.html" style="position:fixed;top:16px;left:16px;z-index:9999;width:64px;height:64px;background:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.15);display:flex;align-items:center;justify-content:center;border:2px solid #e2e8f0;text-decoration:none;transition:transform 0.15s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+</a>
+<!-- Status Bar Spacer (iOS Style) -->
+<div class="h-12 w-full bg-background-light dark:bg-background-dark sticky top-0 z-50 flex items-center justify-between px-8">
+<span class="text-sm font-semibold">9:41</span>
+<div class="flex gap-1.5 items-center">
+<span class="material-icons-round text-sm">signal_cellular_alt</span>
+<span class="material-icons-round text-sm">wifi</span>
+<span class="material-icons-round text-sm rotate-90">battery_full</span>
+</div>
+</div>
+<!-- Main Container -->
+<main class="max-w-md mx-auto pb-32 px-6">
+<!-- Header & Progress -->
+<div class="mt-4 mb-8">
+<div class="flex items-center justify-between mb-6">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-slate-800 ios-shadow">
+<span class="material-icons-round text-primary">arrow_back_ios_new</span>
+</button>
+<div class="flex gap-2">
+<div class="w-8 h-1.5 rounded-full bg-primary"></div>
+<div class="w-8 h-1.5 rounded-full bg-primary"></div>
+<div class="w-8 h-1.5 rounded-full bg-primary/20 dark:bg-primary/10"></div>
+</div>
+<div class="w-10"></div> <!-- Spacer -->
+</div>
+<h1 class="text-2xl font-bold mb-2">Smart Alerts</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                Choose how and when you want to be notified about Mom's safety and movement.
+            </p>
+</div>
+<!-- Notification Preview -->
+<div class="mb-10">
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3 block px-2">Live Preview</span>
+<div class="bg-white/80 dark:bg-slate-800/80 p-4 rounded-2xl border border-white dark:border-slate-700 ios-shadow flex items-start gap-4">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shrink-0">
+<span class="material-icons-round">location_on</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-0.5">
+<span class="font-bold text-sm">PathGuardian</span>
+<span class="text-[10px] text-slate-400">now</span>
+</div>
+<p class="text-sm font-medium text-slate-700 dark:text-slate-200">Journey Update</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Mom just arrived at the Pharmacy.</p>
+</div>
+</div>
+</div>
+<!-- Alert Preferences Sections -->
+<div class="space-y-8">
+<!-- Journey Alerts -->
+<section>
+<div class="flex items-center gap-2 mb-4 px-2">
+<span class="material-icons-round text-primary text-xl">directions_walk</span>
+<h2 class="font-semibold text-sm uppercase tracking-wide">Journey Alerts</h2>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-2xl divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden ios-shadow">
+<div class="p-4 flex items-center justify-between">
+<div>
+<p class="font-medium">Journey Start</p>
+<p class="text-xs text-slate-400">When Mom leaves home</p>
+</div>
+<div class="w-12 h-6 bg-primary rounded-full relative p-1 flex items-center justify-end">
+<div class="w-4 h-4 bg-white rounded-full shadow-sm"></div>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between">
+<div>
+<p class="font-medium">Journey End</p>
+<p class="text-xs text-slate-400">When Mom reaches a destination</p>
+</div>
+<div class="w-12 h-6 bg-primary rounded-full relative p-1 flex items-center justify-end">
+<div class="w-4 h-4 bg-white rounded-full shadow-sm"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Safety Alerts -->
+<section>
+<div class="flex items-center gap-2 mb-4 px-2">
+<span class="material-icons-round text-red-500 text-xl">gpp_maybe</span>
+<h2 class="font-semibold text-sm uppercase tracking-wide">Safety Alerts</h2>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-2xl divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden ios-shadow">
+<div class="p-4 flex items-center justify-between">
+<div>
+<p class="font-medium">Deviation Alerts</p>
+<p class="text-xs text-slate-400">Alert if Mom goes off familiar paths</p>
+</div>
+<div class="w-12 h-6 bg-primary rounded-full relative p-1 flex items-center justify-end">
+<div class="w-4 h-4 bg-white rounded-full shadow-sm"></div>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between">
+<div>
+<p class="font-medium">Unusual Stays</p>
+<p class="text-xs text-slate-400">Stationary in an unknown location</p>
+</div>
+<div class="w-12 h-6 bg-slate-200 dark:bg-slate-600 rounded-full relative p-1 flex items-center">
+<div class="w-4 h-4 bg-white rounded-full shadow-sm"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Device Alerts -->
+<section>
+<div class="flex items-center gap-2 mb-4 px-2">
+<span class="material-icons-round text-amber-500 text-xl">phonelink_setup</span>
+<h2 class="font-semibold text-sm uppercase tracking-wide">System Alerts</h2>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-2xl divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden ios-shadow">
+<div class="p-4 flex items-center justify-between">
+<div>
+<p class="font-medium">Low Battery Warning</p>
+<p class="text-xs text-slate-400">Alert when phone drops below 20%</p>
+</div>
+<div class="w-12 h-6 bg-primary rounded-full relative p-1 flex items-center justify-end">
+<div class="w-4 h-4 bg-white rounded-full shadow-sm"></div>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between">
+<div>
+<p class="font-medium">Offline Status</p>
+<p class="text-xs text-slate-400">Lost GPS or Internet connection</p>
+</div>
+<div class="w-12 h-6 bg-primary rounded-full relative p-1 flex items-center justify-end">
+<div class="w-4 h-4 bg-white rounded-full shadow-sm"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Notification Frequency -->
+<div class="mt-8 mb-4">
+<h3 class="px-2 font-semibold text-sm uppercase tracking-wide mb-4">Urgency Sensitivity</h3>
+<div class="bg-primary/5 dark:bg-primary/10 p-2 rounded-full flex gap-1">
+<button class="flex-1 py-2 text-xs font-semibold rounded-full bg-white dark:bg-slate-800 text-primary shadow-sm">Critical Only</button>
+<button class="flex-1 py-2 text-xs font-semibold rounded-full text-slate-500">Standard</button>
+<button class="flex-1 py-2 text-xs font-semibold rounded-full text-slate-500">All Updates</button>
+</div>
+</div>
+<!-- CTA Action -->
+<div class="mt-12 px-2">
+<button class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-full transition-colors text-lg ios-shadow" onclick="window.location.href='dashboard_live.html'">
+                Save &amp; Continue
+            </button>
+<p class="text-center text-xs text-slate-400 mt-4">You can change these anytime in Settings</p>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 ios-blur border-t border-slate-200 dark:border-slate-800 px-6 py-3 pb-8 z-50">
+<div class="max-w-md mx-auto flex justify-between items-center">
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-round">supervised_user_circle</span>
+<span class="text-[10px] font-medium">Circle</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-round">explore</span>
+<span class="text-[10px] font-medium">Map</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-icons-round">history</span>
+<span class="text-[10px] font-medium">History</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<div class="relative">
+<span class="material-icons-round">settings</span>
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></div>
+</div>
+<span class="text-[10px] font-medium">Settings</span>
+</button>
+</div>
+<!-- iOS Home Indicator -->
+<div class="w-32 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mt-6"></div>
+</nav>
+</body></html>
