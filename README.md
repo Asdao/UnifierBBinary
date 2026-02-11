@@ -1,7 +1,7 @@
 # UnifierBBinary
 ### Advanced Wellness, Accessibility & Safety Suite
 
-**Problem Statement**
+**Problem Statement 1**
 
 Technology has transformed the way we communicate, learn, and navigate the world. However, its potential to support specially-abled individuals remains under-explored. While assistive tools do exist, many of them are designed for only one mode of interaction - such as speech, text, or vision - which unintentionally excludes users who cannot rely on that specific mode. As a result, a multimodal approach is needed to combine different methods so more specially-abled individuals can access communication, learning, and independence.
 
