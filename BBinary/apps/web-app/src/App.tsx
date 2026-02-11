@@ -66,6 +66,13 @@ function App() {
             </button>
 
             <button
+              onClick={() => window.open('http://localhost:3000', '_blank')}
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500 text-white text-xs font-bold uppercase tracking-widest shadow-lg hover:bg-orange-600 transition-all"
+            >
+              <span>🙌</span> Sign Language
+            </button>
+
+            <button
               onClick={handleToggleAutoSpeak}
               className={`w-12 h-12 flex items-center justify-center rounded-full transition-all border ${autoSpeak ? 'bg-indigo-50 border-indigo-100 text-indigo-600' : 'bg-slate-50 border-slate-100 text-slate-400'}`}
               title={autoSpeak ? "Disable auto-speech" : "Enable auto-speech"}

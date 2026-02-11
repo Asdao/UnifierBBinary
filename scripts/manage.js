@@ -1,5 +1,5 @@
 require('dotenv').config();
-const inquirer = require('inquirer');
+const inquirer = require('inquirer').default;
 const { spawn } = require('child_process');
 const path = require('path');
 
@@ -66,12 +66,14 @@ window.APP_CONFIG = {
       choices: [
         { name: 'Load PathGuardian (Port 8081)', value: 'load_pg' },
         { name: 'Load BBinary (Port 5173)', value: 'load_bb' },
+        { name: 'Load Sign Interpreter (Port 3000)', value: 'load_sli' },
         { name: 'Load ALL', value: 'load_all' },
-        new inquirer.Separator(),
+        { name: '--------------------------', disabled: true },
         { name: 'Unload PathGuardian', value: 'unload_pg' },
         { name: 'Unload BBinary', value: 'unload_bb' },
+        { name: 'Unload Sign Interpreter', value: 'unload_sli' },
         { name: 'Unload ALL', value: 'unload_all' },
-        new inquirer.Separator(),
+        { name: '--------------------------', disabled: true },
         { name: 'Exit', value: 'exit' }
       ]
     }
@@ -84,9 +86,13 @@ window.APP_CONFIG = {
     case 'load_bb':
       startProcess('BBinary', 'npm', ['run', 'start:bb']);
       break;
+    case 'load_sli':
+      startProcess('SignInterpreter', 'npm', ['run', 'start:sli']);
+      break;
     case 'load_all':
       startProcess('PathGuardian', 'npm', ['run', 'start:pg']);
       startProcess('BBinary', 'npm', ['run', 'start:bb']);
+      startProcess('SignInterpreter', 'npm', ['run', 'start:sli']);
       break;
     case 'unload_pg':
       stopProcess('PathGuardian');
@@ -94,9 +100,13 @@ window.APP_CONFIG = {
     case 'unload_bb':
       stopProcess('BBinary');
       break;
+    case 'unload_sli':
+      stopProcess('SignInterpreter');
+      break;
     case 'unload_all':
       stopProcess('PathGuardian');
       stopProcess('BBinary');
+      stopProcess('SignInterpreter');
       break;
     case 'exit':
       Object.keys(processes).forEach(name => stopProcess(name));
