@@ -1,68 +1,84 @@
-# UnifierBBinary - Unified Wellness & Safety Suite
+# UnifierBBinary 🛡️✨
+### Advanced Wellness, Accessibility & Safety Suite
 
-This workspace integrates two powerful tools for safety and independence: **PathGuardian 2.0** and **Aurora (BBinary)**.
+**UnifierBBinary** is an integrated ecosystem designed to empower seniors and people with disabilities through the intersection of **AI Vision**, **Conversational Intelligence**, and **Smart Navigation**. 
 
----
-
-## PathGuardian 2.0
-**Independent Mobility, Shared Peace of Mind**
-
-PathGuardian is an accessibility-first navigation app designed for seniors and people with disabilities. It provides voice-guided wayfinding, real-time location tracking for caregivers, and smart deviation detection.
-
-### Key Features
-- **Voice-first navigation**: "Take me to National Museum"
-- **Real-time walking map**: Turn-by-turn simulation and tracking.
-- **Caregiver Dashboard**: Live map + Alerts panel.
-- **SOS / I'm Lost**: Instant emergency alerts.
+This suite brings together three powerful modules into a single, cohesive experience for both users and caregivers.
 
 ---
 
-## Aurora (BBinary)
-**AI-Powered Wellness & Safety Assistant**
+## The Three Pillars
 
-Aurora is an intelligent wellness companion that combines real-time computer vision, emotion detection, and conversational AI to provide empathetic support and safety monitoring.
+### 1. Aurora (AI Wellness Assistant)
+*The empathetic heart of the system.*
+- **Vision Intelligence**: Real-time detection of emotions, hydration events (drinking water), and falls.
+- **Conversational Memory**: A Google Gemini-powered partner that remembers your activities and feelings to provide supportive context.
+- **Biometric Dashboard**: Glassmorphism UI showing live activity, safety status, and situational awareness.
+- **Location**: `BBinary/`
 
-### Key Features
-- **Vision Intelligence**: Real-time emotion, activity (hydration), and fall detection.
-- **Conversational AI**: Natural language interactions powered by Google Gemini.
-- **Biometric Dashboard**: Real-time health and activity metrics.
+### 2. PathGuardian 2.0 (Navigation)
+*Independent mobility, shared peace of mind.*
+- **Voice-First Wayfinding**: Large-button, voice-controlled navigation for seniors.
+- **Caregiver Live Map**: Real-time tracking with route deviation alerts and SOS triggers.
+- **Simulation Mode**: Pre-built "Walk to National Museum" for demonstration.
+- **Location**: `PathGuardian/`
+
+### 3. SignMeUp (Sign Language recognition)
+*Privacy-focused local translation.*
+- **Local Gesture Recognition**: Teach the machine *your* specific signs (e.g., "Hungry", "Medicine").
+- **Edge Deployment**: Uses MediaPipe and LSTMs to recognize signs entirely in your browser.
+- **Integration**: Accessible directly from the Aurora Dashboard.
+- **Location**: `SignLanguageInterpreter/`
 
 ---
 
 ## Getting Started
 
-### Prerequisites
-- **Node.js**: 18+ and npm.
-- **Google AI Studio API Key**: Required for Aurora's Conversational AI.
+The entire suite is managed by a centralized control script.
 
-### Quick Start
-1.  **Install everything**:
-    ```bash
-    npm run install:all
-    ```
-2.  **Configure Secrets**:
-    Open the root `.env` file and add your `GOOGLE_API_KEY`.
-3.  **Run the Workspace**:
-    ```bash
-    npm run dev
-    ```
-    This launches an interactive menu to start PathGuardian, BBinary, or both.
+### 1. Unified Installation
+```bash
+npm run install:all
+```
+
+### 2. Configure Secrets
+Create a `.env` file in the root directory:
+```env
+GOOGLE_API_KEY=your_key_here
+VITE_MODEL_NAME=gemma-3-4b-it
+```
+
+### 3. Launch One-Click Management
+```bash
+npm run dev
+```
+This interactive CLI lets you start/stop individual modules or the entire suite simultaneously.
 
 ---
 
-## Port Reference
-- **PathGuardian**: [http://localhost:8081](http://localhost:8081)
-- **BBinary**: [http://localhost:5173](http://localhost:5173) (or next available port)
+## Tech Stack
+
+| Component | Tech |
+|-----------|------|
+| **Core AI** | Google Gemini (GenAI SDK), MediaPipe |
+| **Edge Vision** | ONNX Runtime Web, TFLite, MediaPipe Tasks |
+| **Frontend** | React 19, Vite 7, TailwindCSS 4, Leaflet.js |
+| **Backend** | Node.js (Management Layer), Next.js (SLI) |
+| **Voice** | Web Speech API (TTS/STT) |
 
 ---
 
 ## Project Structure
-- `PathGuardian/`: Source for version 2.0 navigation app.
-- `BBinary/`: Source for Aurora AI assistant.
-- `scripts/`: Integration management scripts.
-- `.env`: Centralized secrets.
+
+- `/scripts`: The "brain" of the unified workspace management.
+- `/BBinary`: Aurora's React-based frontend and vision pipeline.
+- `/PathGuardian`: Accessibility-first navigation assets.
+- `/SignLanguageInterpreter`: Next.js gesture recognition engine.
+- `.env`: Centralized secret management.
 
 ---
 
-## Integration Details
-The applications are linked via a **Launch PathGuardian** button on the Aurora dashboard, ensuring a seamless experience for caregivers.
+## Hackathon Context
+Built for **Beyond Binary 2026**. This project demonstrates how edge computing and conversational AI can create a truly private, proactive caregiving environment.
+
+**Independent Mobility. Empathetic Support. Local Privacy.**
