@@ -1,4 +1,4 @@
-# PathGuardian 2.0 — Product Requirements Document
+# PathGuardian 2.0 - Product Requirements Document
 
 ## 1. Overview
 
@@ -121,7 +121,7 @@ Walking Map → Red "NEED HELP" → Modal: "Alert Sent to Caretaker Sarah"
 - Steps 5-6: **Deviation detected** — user goes right instead of left, red warning banner
 - Steps 7-8: **Auto-correction** — heading back to Stamford Road
 - Steps 9-11: Normal walking, museum in sight
-- Step 12: **Arrival celebration** — "🎉 You have arrived!"
+- Step 12: **Arrival celebration** — "You have arrived!"
 
 ### Dashboard Simulation (dashboard_live.html)
 - Arthur's marker animates along the route every 5 seconds

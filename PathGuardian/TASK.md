@@ -12,7 +12,7 @@
 
 ## Phase 2: Emergency & Help
 - [x] Red NEED HELP button on wayfinding page
-- [x] Alert modal: "🚨 Alert Sent to Caretaker Sarah" with Call/Cancel
+- [x] Alert modal: "Alert Sent to Caretaker Sarah" with Call/Cancel
 - [x] SOS / I'm Lost emergency page
 - [x] Safety check-in flow
 

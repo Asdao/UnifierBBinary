@@ -1,4 +1,4 @@
-# PathGuardian 2.0 🛡️
+# PathGuardian 2.0
 
 **Independent Mobility, Shared Peace of Mind**
 
@@ -8,7 +8,7 @@ PathGuardian is an accessibility-first navigation app designed for seniors and p
 
 ---
 
-## ✨ Features
+## Features
 
 ### For Navigators (Seniors / Users)
 - **Voice-first navigation** — say "Take me to National Museum" and go
@@ -35,7 +35,7 @@ PathGuardian is an accessibility-first navigation app designed for seniors and p
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 PathGuardian--main/
@@ -63,7 +63,7 @@ PathGuardian--main/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Run Locally
 ```bash
@@ -79,7 +79,7 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Technology | Usage |
 |-----------|-------|
@@ -91,7 +91,7 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
 ---
 
-## 📱 Key Screens
+## Key Screens
 
 | Screen | Description |
 |--------|-------------|
@@ -104,17 +104,17 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
 ---
 
-## 📄 Documentation
+## Documentation
 
 - [PRD.md](PRD.md) — Product Requirements Document
 - [TASK.md](TASK.md) — Development task checklist
 
 ---
 
-## 👥 Team
+## Team
 
 Built for accessibility and independent mobility.
 
-## 📝 License
+## License
 
 MIT License
